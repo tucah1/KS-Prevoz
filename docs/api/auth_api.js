@@ -40,3 +40,16 @@ const login_required = {
 const login_return = {
 	token: 'token to return',
 }
+
+// ! ###############################################
+// @route       GET api/auth/google/callback
+// @desc        Authenticate and authorize user via google account
+// @access      Public
+// * Required data in POST object:
+const google_register_required = {
+	googleToken: 'token from google',
+}
+// * Return object:
+const register_return = {
+	token: 'token to return',
+}

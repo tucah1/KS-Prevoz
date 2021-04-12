@@ -3,6 +3,8 @@ const uuid = require('uuid')
 const bcrypt = require('bcryptjs')
 const jwt = require('jsonwebtoken')
 const { body, validationResult } = require('express-validator')
+const { OAuth2Client } = require('google-auth-library')
+const client = new OAuth2Client(process.env.CLIENT_ID)
 
 const getConnection = require('../config/database')
 const authMiddleware = require('../middleware/auth')
@@ -79,7 +81,8 @@ router.post(
                 last_name,
                 email,
                 password: '',
-                app_user_access: 0
+                app_user_access: 0,
+                register_option: 0,
             }
 
             const salt = await bcrypt.genSalt(10)
@@ -135,11 +138,22 @@ router.post('/login', [body('email').exists(), body('password').exists()], async
         const { email, password } = req.body
 
         const connection = await getConnection()
-        let result = await connection.query('SELECT app_user_id, password FROM app_user WHERE email = ?', [email])
+        let result = await connection.query('SELECT app_user_id, password, register_option FROM app_user WHERE email = ?', [email])
 
         if (result[0].length == 0) {
             return res.status(400).json({
                 errors: [{ code: 400, message: 'Authorization failed!' }],
+            })
+        }
+
+        if (result[0][0].register_option != 0) {
+            return res.status(400).json({
+                errors: [
+                    {
+                        code: 400,
+                        message: 'Incorrect register option!',
+                    },
+                ],
             })
         }
 
@@ -173,5 +187,85 @@ router.post('/login', [body('email').exists(), body('password').exists()], async
 				.json({ errors: [{ code: 500, message: 'Server error' }] })
     }
 })
+
+// @route       GET api/auth/google/callback
+// @desc        Authenticate and authorize user via google account
+// @access      Public
+router.post('/google/callback', async (req, res) => {
+	const googleToken = req.body.googleToken
+
+	try {
+		const ticket = await client.verifyIdToken({
+			idToken: googleToken,
+			audience: process.env.CLIENT_ID,
+		})
+		let payload = ticket.getPayload()
+		const userid = payload['sub']
+
+		const { given_name, family_name, email, email_verified } = payload
+
+		const connection = await getConnection()
+		
+		const result = await connection.query(
+			'SELECT * FROM app_user WHERE app_user_id = ?',
+			[userid]
+		)
+		connection.release()
+
+		if (result[0].length > 0) {
+			const payloadX = {
+				user: {
+					id: userid,
+				},
+			}
+
+			jwt.sign(payloadX, process.env.JWT_SECRET, (err, token) => {
+				if (err) throw err
+				return res.status(200).json({ token })
+			})
+		} else {
+			let data = {
+				app_user_id: userid,
+				first_name: given_name,
+				last_name: family_name,
+				email: email,
+				password: uuid.v4(),
+				user_access: 0,
+				register_option: 1,
+			}
+
+			const salt = await bcrypt.genSalt(10)
+			const hash = await bcrypt.hash(data.password, salt)
+			data.password = hash
+
+			const connection = await getConnection()
+
+			const result = await connection.query(
+				'INSERT INTO app_user SET ?',
+				data
+			)
+			connection.release()
+
+			const payload = {
+				user: {
+					id: userid,
+				},
+			}
+
+			jwt.sign(payload, process.env.JWT_SECRET, (err, token) => {
+				if (err) throw err
+				return res.status(200).json({ token })
+			})
+		}
+	} catch (error) {
+		logger.error(
+			`Server error! Route: GET api/auth/google/callback\n${error.stack}`
+		)
+		return res.status(500).json({
+			errors: [{ code: 500, message: 'Authentication failed!' }],
+		})
+	}
+})
+
 
 module.exports = router
