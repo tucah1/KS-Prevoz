@@ -81,7 +81,7 @@ router.post(
                 last_name,
                 email,
                 password: '',
-                app_user_access: 0,
+                app_user_access: 1,
                 register_option: 0,
             }
 
@@ -230,7 +230,7 @@ router.post('/google/callback', async (req, res) => {
 				last_name: family_name,
 				email: email,
 				password: uuid.v4(),
-				user_access: 0,
+				app_user_access: 1,
 				register_option: 1,
 			}
 
@@ -258,14 +258,68 @@ router.post('/google/callback', async (req, res) => {
 			})
 		}
 	} catch (error) {
-		logger.error(
-			`Server error! Route: GET api/auth/google/callback\n${error.stack}`
-		)
 		return res.status(500).json({
 			errors: [{ code: 500, message: 'Authentication failed!' }],
 		})
 	}
 })
+
+// @route       PUT api/auth/edit-profile
+// @desc        Edit user profile information
+// @access      Private
+router.post('/edit-profile', [
+	body('first_name').exists(),
+	body('last_name').exists(),
+	body('notifications').exists(),
+	body('email').isEmail(),
+	authMiddleware], async (req, res) => {
+	const errors = validationResult(req)
+	if (!errors.isEmpty()) {
+		return res.status(422).json({
+			errors: errors.array().map((x) => {
+				let { msg, ...new_x } = x
+				new_x['message'] = msg
+				new_x['code'] = 422
+				return new_x
+			}),
+		})
+	}
+
+	try {
+		const connection = await getConnection()
+		let newInfo = {
+			first_name: req.body.first_name,
+			last_name: req.body.last_name,
+			email: req.body.email,
+			notifications: req.body.notifications
+		}
+
+		if (req.body.password) {
+			if (req.body.password.length < 8) {
+				return res.status(400).json({errors: [
+						{
+							code: 400,
+							message: "New password invalid!"
+						}
+					]})
+			}
+			let salt = await bcrypt.genSalt()
+			let hash = await bcrypt.hash(req.body.password, salt)
+			newInfo.password = hash
+			newInfo.register_option = 0
+		}
+		await connection.query('UPDATE app_user SET ? WHERE app_user_id = ?', [newInfo, req.user.id])
+		connection.release()
+		return res.json({message: 'Profile details updated successfully!'})
+	} catch (error) {
+		console.log(error)
+		return res
+			.status(500)
+			.json({ errors: [{ code: 500, message: 'Server error' }] })
+	}
+})
+
+
 
 
 module.exports = router

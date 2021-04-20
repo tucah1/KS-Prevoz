@@ -53,3 +53,20 @@ const google_register_required = {
 const register_return = {
 	token: 'token to return',
 }
+
+/ ! ###############################################
+// @route       PUT api/auth/edit-profile
+// @desc        Edit user profile information
+// @access      Private
+// * Required data in POST object:
+const edit_profile_required = {
+	first_name: '',
+	last_name: '',
+	email: '',
+	notifications: 1, // This value can be 0 or 1 (0 is notifications turn off). default in db is 1
+	password: '' // OPTIONAL for only when user is changing their password
+}
+// * Return object:
+const edit_profile_return = {
+	message: 'Profile details updated successfully!'
+}
