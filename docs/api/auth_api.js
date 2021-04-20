@@ -8,7 +8,8 @@ const get_user = {
 	first_name: '',
 	last_name: '',
 	email: '',
-    app_user_access: 0
+	notifications: 0,
+    app_user_access: 1
 }
 
 // ! ###############################################
