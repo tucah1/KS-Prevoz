@@ -13,6 +13,7 @@ app.get('/', (req, res) => {
 })
 
 app.use('/api/auth', require('./routes/auth'))
+app.use('/api/favorites', require('./routes/favorites'))
 
 app.listen(PORT, () => {
 	console.log('Server started on port ' + PORT.toString(10) + '...')
