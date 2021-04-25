@@ -4,12 +4,14 @@ import { connect } from "react-redux";
 import { Redirect } from "react-router-dom";
 import { googleLogin, register } from "../../actions/auth";
 import GoogleLogin from "react-google-login";
+import { setAlert } from "../../actions/alert";
 
 export const Register = ({
     handleAuthType,
     isAuthenticated,
     register,
     googleLogin,
+    setAlert,
 }) => {
     const [formData, setFormData] = useState({
         firstName: "",
@@ -27,7 +29,7 @@ export const Register = ({
     const onSubmit = (e) => {
         e.preventDefault();
         if (password !== password2) {
-            alert("Passwords do not match", "danger");
+            setAlert("Passwords do not match!", "error");
         } else {
             const data = {
                 first_name: firstName,
@@ -44,12 +46,12 @@ export const Register = ({
     };
 
     if (isAuthenticated) {
-        return <Redirect to="/dashboard" />;
+        return <Redirect to="/favorites" />;
     }
 
     return (
         <>
-            <div className="login-wrapper">
+            <div className="modal-wrapper">
                 <div className="login ">
                     <div className="login-heading">
                         <button onClick={handleAuthType}>Sign in</button>
@@ -148,6 +150,6 @@ const mapStateToProps = (state) => ({
     isAuthenticated: state.auth.isAuthenticated,
 });
 
-const mapDispatchToProps = { register, googleLogin };
+const mapDispatchToProps = { register, googleLogin, setAlert };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Register);

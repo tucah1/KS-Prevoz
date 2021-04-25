@@ -3,22 +3,37 @@ import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import Modal from "@material-ui/core/Modal";
 import { logout } from "../actions/auth";
+import { Link } from "react-router-dom";
 
 import Login from "./Authentication/Login";
 import Register from "./Authentication/Register";
+import Settings from "./Settings";
 
-export const Navbar = ({ isAuthenticated, logout, userLevel }) => {
+export const Navbar = ({ isAuthenticated, logout, userLevel, initials }) => {
     useEffect(() => {
         if (isAuthenticated) {
-            setmodalOpen(false);
+            setmodalSigninup(false);
+            setmodalSettings(false);
+            setuserOptions(false);
         }
     }, [isAuthenticated]);
-    const [modalOpen, setmodalOpen] = useState(false);
+    //modal for sign in/up
+    const [modalSigninup, setmodalSigninup] = useState(false);
     //if authType is true, display Login, false -> display Register
     const [authType, setauthType] = useState(true);
 
-    const handleClose = () => {
-        setmodalOpen(false);
+    //display/hide user options
+    const [userOptions, setuserOptions] = useState(false);
+
+    //modal for user settings
+    const [modalSettings, setmodalSettings] = useState(false);
+
+    const handleCloseSigninModal = () => {
+        setmodalSigninup(false);
+    };
+
+    const handleCloseSettingsModal = () => {
+        setmodalSettings(false);
     };
 
     const handleAuthType = () => {
@@ -28,9 +43,9 @@ export const Navbar = ({ isAuthenticated, logout, userLevel }) => {
     return (
         <>
             <nav className="navbar navbar-expand-lg">
-                <p className="navbar-brand" href="#">
+                <Link className="navbar-brand" to="/">
                     <span>KS</span> Prevoz
-                </p>
+                </Link>
                 <button
                     className="navbar-toggler"
                     data-toggle="collapse"
@@ -44,52 +59,97 @@ export const Navbar = ({ isAuthenticated, logout, userLevel }) => {
                 >
                     <ul className="navbar-nav nav-middle">
                         <li className="nav-item">
-                            <a to="/" className="navbar-link">
+                            <Link to="/" className="navbar-link">
                                 {" "}
                                 SCHEDULES{" "}
-                            </a>
+                            </Link>
                         </li>
                         <li className="nav-item">
-                            <a to="/products" className="navbar-link">
+                            <Link to="/find-routes" className="navbar-link">
                                 FIND ROUTES
-                            </a>
+                            </Link>
                         </li>
                         {isAuthenticated && userLevel == 1 ? (
                             <>
                                 <li className="nav-item">
-                                    <a to="/favorites" className="navbar-link">
+                                    <Link
+                                        to="/favorites"
+                                        className="navbar-link"
+                                    >
                                         {" "}
                                         FAVORITES{" "}
-                                    </a>
+                                    </Link>
                                 </li>
                             </>
                         ) : null}
                         {isAuthenticated && userLevel == 2 ? (
                             <>
                                 <li className="nav-item">
-                                    <a to="/favorites" className="navbar-link">
+                                    <Link
+                                        to="/notifications"
+                                        className="navbar-link"
+                                    >
                                         {" "}
                                         NOTIFICATIONS{" "}
-                                    </a>
+                                    </Link>
                                 </li>
                             </>
                         ) : null}
                         <li className="nav-item">
-                            <a to="/about" className="navbar-link">
+                            <Link to="/about" className="navbar-link">
                                 {" "}
                                 ABOUT{" "}
-                            </a>
+                            </Link>
                         </li>
                     </ul>
                     <ul className="navbar-nav nav-right">
                         {isAuthenticated ? (
-                            <button
-                                onClick={() => {
-                                    logout();
-                                }}
-                            >
-                                Logout
-                            </button>
+                            <>
+                                <div
+                                    className="user-btn-wrapper"
+                                    onBlur={() => {
+                                        setuserOptions(false);
+                                    }}
+                                >
+                                    <button
+                                        className="button-emp user-btn"
+                                        onClick={() => {
+                                            setuserOptions(!userOptions);
+                                        }}
+                                    >
+                                        {" "}
+                                        {initials}{" "}
+                                    </button>
+                                    {userOptions && (
+                                        <>
+                                            <div className="user-options d-flex flex-column">
+                                                <button
+                                                    onMouseDown={(e) => {
+                                                        e.preventDefault();
+                                                    }}
+                                                    onClick={() => {
+                                                        setmodalSettings(true);
+                                                        setuserOptions(false);
+                                                    }}
+                                                >
+                                                    Settings
+                                                </button>
+                                                <button
+                                                    onMouseDown={(e) => {
+                                                        e.preventDefault();
+                                                    }}
+                                                    onClick={() => {
+                                                        logout();
+                                                        setuserOptions(false);
+                                                    }}
+                                                >
+                                                    Logout
+                                                </button>
+                                            </div>
+                                        </>
+                                    )}
+                                </div>
+                            </>
                         ) : (
                             <>
                                 <li className="nav-item d-flex align-items-center">
@@ -97,7 +157,7 @@ export const Navbar = ({ isAuthenticated, logout, userLevel }) => {
                                         to="/contact"
                                         className="navbar-link"
                                         onClick={() => {
-                                            setmodalOpen(true);
+                                            setmodalSigninup(true);
                                             setauthType(true);
                                         }}
                                     >
@@ -110,7 +170,7 @@ export const Navbar = ({ isAuthenticated, logout, userLevel }) => {
                                         to="/contact"
                                         className="navbar-link button-emp"
                                         onClick={() => {
-                                            setmodalOpen(true);
+                                            setmodalSigninup(true);
                                             setauthType(false);
                                         }}
                                     >
@@ -123,9 +183,9 @@ export const Navbar = ({ isAuthenticated, logout, userLevel }) => {
                 </div>
             </nav>
             <Modal
-                open={modalOpen}
-                onClose={handleClose}
-                onEscapeKeyDown={handleClose}
+                open={modalSigninup}
+                onClose={handleCloseSigninModal}
+                onEscapeKeyDown={handleCloseSigninModal}
                 aria-labelledby="simple-modal-title"
                 aria-describedby="simple-modal-description"
             >
@@ -135,6 +195,17 @@ export const Navbar = ({ isAuthenticated, logout, userLevel }) => {
                     ) : (
                         <Register handleAuthType={handleAuthType} />
                     )}
+                </>
+            </Modal>
+            <Modal
+                open={modalSettings}
+                onClose={handleCloseSettingsModal}
+                onEscapeKeyDown={handleCloseSettingsModal}
+                aria-labelledby="simple-modal-title"
+                aria-describedby="simple-modal-description"
+            >
+                <>
+                    <Settings />
                 </>
             </Modal>
         </>
@@ -149,6 +220,7 @@ Navbar.propTypes = {
 const mapStateToProps = (state) => ({
     isAuthenticated: state.auth.isAuthenticated,
     userLevel: state.auth.userLevel,
+    initials: state.user.initials,
 });
 
 const mapDispatchToProps = {

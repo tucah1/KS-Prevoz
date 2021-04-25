@@ -26,13 +26,13 @@ export const Login = ({
         googleLogin(googleData.getAuthResponse().id_token);
     };
 
-    // if (isAuthenticated) {
-    //     return <Redirect to="/" />;
-    // }
+    if (isAuthenticated) {
+        return <Redirect to="/favorites" />;
+    }
 
     return (
         <>
-            <div className="login-wrapper">
+            <div className="modal-wrapper">
                 <div className="login ">
                     <div className="login-heading">
                         <button>
@@ -100,7 +100,9 @@ Login.propTypes = {
     login: PropTypes.func.isRequired,
 };
 
-const mapStateToProps = (state) => ({});
+const mapStateToProps = (state) => ({
+    isAuthenticated: state.auth.isAuthenticated,
+});
 
 const mapDispatchToProps = { login, googleLogin };
 

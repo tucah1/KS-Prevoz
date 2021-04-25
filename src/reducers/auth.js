@@ -12,7 +12,6 @@ const initialState = {
     token: localStorage.getItem("token"),
     isAuthenticated: null,
     userLevel: 0,
-    user: null,
 };
 
 export default (state = initialState, action) => {
@@ -25,7 +24,6 @@ export default (state = initialState, action) => {
             return {
                 ...state,
                 isAuthenticated: true,
-                user: payload,
                 userLevel: payload.app_user_access,
             };
         case REGISTER_SUCCESS:
@@ -45,7 +43,6 @@ export default (state = initialState, action) => {
                 ...state,
                 token: null,
                 isAuthenticated: false,
-                user: null,
                 userLevel: 0,
             };
         default:

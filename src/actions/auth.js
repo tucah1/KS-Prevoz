@@ -5,19 +5,14 @@ import {
     AUTH_ERROR,
     LOGIN_FAIL,
     LOGIN_SUCCESS,
-    CLEAR_PROFILE,
     LOGOUT,
+    CLEAR_USER,
 } from "./types";
 import api from "../utils/api";
-// import { setAlert } from "./alert";
-// import setAuthToken from "../utils/setAuthToken";
+import { setAlert } from "./alert";
 
 // Load User
 export const loadUser = () => async (dispatch) => {
-    // if (localStorage.token) {
-    //     setAuthToken(localStorage.getItem("token"));
-    // }
-
     const config = {
         headers: { "Cache-Control": "max-age=0" },
     };
@@ -52,12 +47,13 @@ export const register = (formData) => async (dispatch) => {
         });
         dispatch(loadUser());
     } catch (err) {
-        const errors = err.response;
-        console.log(errors);
+        const errors = err.response.data.errors;
 
-        // if (errors) {
-        //     errors.forEach((error) => dispatch(setAlert(error.msg, "danger")));
-        // }
+        if (errors) {
+            errors.forEach((error) =>
+                dispatch(setAlert(error.message, "error"))
+            );
+        }
 
         dispatch({
             type: REGISTER_FAIL,
@@ -81,10 +77,12 @@ export const login = (email, password) => async (dispatch) => {
         });
         dispatch(loadUser());
     } catch (err) {
-        const errors = err.errors;
-        console.log(err.response);
+        const errors = err.response.data.errors;
+
         if (errors) {
-            // errors.forEach((error) => dispatch(setAlert(error.msg, "danger")));
+            errors.forEach((error) => {
+                dispatch(setAlert(error.message, "error"));
+            });
         }
 
         dispatch({
@@ -115,7 +113,13 @@ export const googleLogin = (token) => async (dispatch) => {
         });
         dispatch(loadUser());
     } catch (err) {
-        console.error(err.response);
+        const errors = err.response.data.errors;
+        console.log(err.response);
+        if (errors) {
+            errors.forEach((error) =>
+                dispatch(setAlert(error.message, "error"))
+            );
+        }
         dispatch({
             type: LOGIN_FAIL,
         });
@@ -124,6 +128,6 @@ export const googleLogin = (token) => async (dispatch) => {
 
 // Logout / Clear Profile
 export const logout = () => (dispatch) => {
-    dispatch({ type: CLEAR_PROFILE });
+    dispatch({ type: CLEAR_USER });
     dispatch({ type: LOGOUT });
 };
