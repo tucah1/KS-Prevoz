@@ -36,3 +36,28 @@ const add_line_required = {
 	from_point: '',
 	to_point: '',
 }
+const add_line_return = {
+	message: 'Line added successfully!',
+}
+
+// ! ###############################################
+// @route       POST api/line/edit-line
+// @desc        Edit existing line info
+// @access      Private - Admin
+const edit_line_required = {
+	file: 'file', // OPTIONAL
+	line_id: '',
+	from_point: '',
+	to_point: '',
+}
+const edit_line_return = {
+	message: 'Line updated successfully!',
+}
+
+// ! ###############################################
+// @route       DELETE api/line/delete-line/:line_id
+// @desc        Delete existing line
+// @access      Private - Admin
+const delete_line_return = {
+	message: 'Line deleted successfully!',
+}

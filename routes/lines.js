@@ -132,7 +132,7 @@ router.post(
 	}
 )
 
-// @route       POST api/line/delete-line/:line_id
+// @route       DELETE api/line/delete-line/:line_id
 // @desc        Delete existing line
 // @access      Private - Admin
 router.delete(
