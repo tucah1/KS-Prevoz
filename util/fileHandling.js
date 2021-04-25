@@ -1,6 +1,7 @@
 const util = require('util')
 const path = require('path')
 const fs = require('fs')
+const fsp = require('fs').promises
 
 exports.deleteFile = async (fileName) => {
 	await fs.readdir(process.env.SCHEDULE_STORAGE, (err, files) => {
@@ -13,5 +14,19 @@ exports.deleteFile = async (fileName) => {
 				})
 			}
 		})
+	})
+}
+
+exports.renameFile = (oldFileName, newFileName) => {
+	return new Promise(async (resolve, rejects) => {
+		try {
+			await fsp.rename(
+				path.join(process.env.SCHEDULE_STORAGE, `${oldFileName}.csv`),
+				path.join(process.env.SCHEDULE_STORAGE, `${newFileName}.csv`)
+			)
+			resolve()
+		} catch (error) {
+			rejects(error)
+		}
 	})
 }

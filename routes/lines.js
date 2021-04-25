@@ -9,7 +9,7 @@ const authMiddleware = require('../middleware/auth')
 const adminAuthMiddleware = require('../middleware/adminAuth')
 const uploadScheduleMiddleware = require('../middleware/scheduleUpload')
 const { genNewLineId } = require('../middleware/genId')
-const { deleteFile } = require('../util/fileHandling')
+const { deleteFile, renameFile } = require('../util/fileHandling')
 
 const router = express.Router()
 
@@ -70,6 +70,87 @@ router.post(
 		} catch (error) {
 			console.log(error)
 			deleteFile(req.newLineId)
+			return res
+				.status(500)
+				.json({ errors: [{ code: 500, message: 'Server error' }] })
+		}
+	}
+)
+
+// @route       POST api/line/edit-line
+// @desc        Edit existing line info
+// @access      Private - Admin
+router.post(
+	'/edit-line',
+	[
+		authMiddleware,
+		adminAuthMiddleware,
+		genNewLineId,
+		uploadScheduleMiddleware,
+		body('line_id').exists(),
+		body('from_point').exists(),
+		body('to_point').exists(),
+	],
+	async (req, res) => {
+		// Checking for validation errors
+		const errors = validationResult(req)
+		if (!errors.isEmpty()) {
+			return res.status(422).json({
+				errors: errors.array().map((x) => {
+					let { msg, ...new_x } = x
+					new_x['message'] = msg
+					new_x['code'] = 422
+					return new_x
+				}),
+			})
+		}
+
+		let newData = {
+			from_point: req.body.from_point,
+			to_point: req.body.to_point,
+		}
+		try {
+			const connection = await getConnection()
+			await connection.query('UPDATE line SET ? WHERE line_id = ?', [
+				newData,
+				req.body.line_id,
+			])
+			connection.release()
+
+			if (req.file !== undefined) {
+				//deleteFile(req.body.line_id)
+				await renameFile(req.newLineId, req.body.line_id)
+			}
+			return res.json({ message: 'Line successfully updated!' })
+		} catch (error) {
+			console.log(error)
+			deleteFile(req.newLineId)
+			return res
+				.status(500)
+				.json({ errors: [{ code: 500, message: 'Server error' }] })
+		}
+	}
+)
+
+// @route       POST api/line/delete-line/:line_id
+// @desc        Delete existing line
+// @access      Private - Admin
+router.delete(
+	'/delete-line/:line_id',
+	[authMiddleware, adminAuthMiddleware],
+	async (req, res) => {
+		const { line_id } = req.params
+		try {
+			const connection = await getConnection()
+			await connection.query('DELETE FROM line WHERE line_id = ?', [
+				line_id,
+			])
+			connection.release()
+
+			deleteFile(line_id)
+
+			return res.json({ message: 'Line deleted successfully!' })
+		} catch (error) {
 			return res
 				.status(500)
 				.json({ errors: [{ code: 500, message: 'Server error' }] })
