@@ -1,10 +1,10 @@
 const mysql = require('mysql2/promise')
 
 const pool = mysql.createPool({
-	host: 'localhost',
-	user: 'root',
-	password: '',
-	database: 'ksprevoz',
+	host: 'eu-cdbr-west-01.cleardb.com',
+	user: process.env.DB_USERNAME,
+	password: process.env.DB_PASSWORD,
+	database: 'heroku_419bfc056cc4207',
 	waitForConnections: false,
 	connectionLimit: 10, // Only during developemnt, needs to go down
 	connectTimeout: 10000,
