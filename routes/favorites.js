@@ -24,7 +24,6 @@ router.get("/getFavorites", authMiddleware, async (req, res) => {
     // }
     return res.status(200).json(favoriteLines);
   } catch (error) {
-    console.log(error);
     return res
       .status(500)
       .json({ errors: [{ code: 500, message: "Server error" }] });
@@ -92,7 +91,6 @@ router.post(
         .status(201)
         .json({ message: "Line successfully added to favorite list!" });
     } catch (error) {
-      console.log(error);
       return res
         .status(500)
         .json({ errors: [{ code: 500, message: "Server error" }] });
@@ -141,13 +139,11 @@ router.delete(
         "DELETE FROM favorite WHERE (app_user_id, line_id)=(?,?)",
         [req.user.id, req.body.line_id]
       );
-      console.log(result)
       connection.release();
       return res
         .status(200)
         .json({ message: "Line successfully deleted from favorite list!" });
     } catch (error) {
-      console.log(error);
       return res
         .status(500)
         .json({ errors: [{ code: 500, message: "Server error" }] });

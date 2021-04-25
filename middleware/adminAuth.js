@@ -7,10 +7,10 @@ module.exports = async function (req, res, next) {
 			'SELECT app_user_access FROM app_user WHERE app_user_id = ?',
 			[req.user.id]
 		)
-		let { user_access } = result[0][0]
+		let { app_user_access } = result[0][0]
 		connection.release()
 
-		if (user_access === 2) {
+		if (app_user_access == 2) {
 			next()
 		} else {
 			return res.status(400).json({
