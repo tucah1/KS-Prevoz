@@ -26,11 +26,16 @@ export const updateSettings = (obj) => async (dispatch) => {
         dispatch({ type: SUCCESS });
         dispatch(setAlert(res.data.message, "success"));
     } catch (err) {
-        const errors = err.response.data.errors;
-        if (errors) {
-            errors.forEach((error) => {
-                dispatch(setAlert(error.message, "error"));
-            });
+        if (err.response) {
+            const errors = err.response.data.errors;
+
+            if (errors) {
+                errors.forEach((error) =>
+                    dispatch(setAlert(error.message, "error"))
+                );
+            }
+        } else {
+            console.log(err);
         }
 
         dispatch({

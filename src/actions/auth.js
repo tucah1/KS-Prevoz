@@ -47,12 +47,16 @@ export const register = (formData) => async (dispatch) => {
         });
         dispatch(loadUser());
     } catch (err) {
-        const errors = err.response.data.errors;
+        if (err.response) {
+            const errors = err.response.data.errors;
 
-        if (errors) {
-            errors.forEach((error) =>
-                dispatch(setAlert(error.message, "error"))
-            );
+            if (errors) {
+                errors.forEach((error) =>
+                    dispatch(setAlert(error.message, "error"))
+                );
+            }
+        } else {
+            console.log(err);
         }
 
         dispatch({
@@ -77,12 +81,16 @@ export const login = (email, password) => async (dispatch) => {
         });
         dispatch(loadUser());
     } catch (err) {
-        const errors = err.response.data.errors;
+        if (err.response) {
+            const errors = err.response.data.errors;
 
-        if (errors) {
-            errors.forEach((error) => {
-                dispatch(setAlert(error.message, "error"));
-            });
+            if (errors) {
+                errors.forEach((error) =>
+                    dispatch(setAlert(error.message, "error"))
+                );
+            }
+        } else {
+            console.log(err);
         }
 
         dispatch({
@@ -113,12 +121,16 @@ export const googleLogin = (token) => async (dispatch) => {
         });
         dispatch(loadUser());
     } catch (err) {
-        const errors = err.response.data.errors;
-        console.log(err.response);
-        if (errors) {
-            errors.forEach((error) =>
-                dispatch(setAlert(error.message, "error"))
-            );
+        if (err.response) {
+            const errors = err.response.data.errors;
+
+            if (errors) {
+                errors.forEach((error) =>
+                    dispatch(setAlert(error.message, "error"))
+                );
+            }
+        } else {
+            console.log(err);
         }
         dispatch({
             type: LOGIN_FAIL,
