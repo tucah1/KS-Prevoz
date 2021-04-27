@@ -1,18 +1,20 @@
 // ! ###############################################
 // @route       GET api/line/lines/:page_no/:item_limit
 // @desc        Get list of all lines
-// @access      Public
+// @access      Private - Admin
 // * Return object:
 const get_lines_return = [
 	{
 		line_id: 'dcc4680d-37b9-4a00-be1f-6cc4c55008a4',
 		from_point: 'Ilidza',
 		to_point: 'Tarcin',
+		transport_type: 'Bus',
 	},
 	{
 		line_id: 'd0352376-1692-42e7-a610-de7e08fd80e9',
 		from_point: 'Presjednistvo',
 		to_point: 'Vogosca',
+		transport_type: 'Tram',
 	},
 ]
 
@@ -35,6 +37,7 @@ const add_line_required = {
 	file: '.csv file',
 	from_point: '',
 	to_point: '',
+	transport_type: '',
 }
 const add_line_return = {
 	message: 'Line added successfully!',
@@ -49,6 +52,7 @@ const edit_line_required = {
 	line_id: '',
 	from_point: '',
 	to_point: '',
+	transport_type: '',
 }
 const edit_line_return = {
 	message: 'Line updated successfully!',

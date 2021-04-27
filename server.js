@@ -16,6 +16,7 @@ app.use('/api/auth', require('./routes/auth'))
 app.use('/api/favorites', require('./routes/favorites'))
 app.use('/api/notifications', require('./routes/notifications'))
 app.use('/api/line', require('./routes/lines'))
+app.use('/api/testing', require('./routes/testing'))
 
 app.listen(PORT, () => {
 	console.log('Server started on port ' + PORT.toString(10) + '...')
