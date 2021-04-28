@@ -616,6 +616,12 @@ label > input {
     margin-right: 0 !important;
 }
 
+/* ! ADD NEW LINE */
+
+.add-new-line {
+    text-align: left;
+}
+
 /* TEMP */
 .temp {
     height: 1000px;

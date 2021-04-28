@@ -42,7 +42,7 @@ export const Register = ({
     };
 
     const handleGoogleLogin = (googleData) => {
-        googleLogin(googleData.getAuthResponse().id_token);
+        googleLogin(googleData.tokenId);
     };
 
     if (isAuthenticated) {

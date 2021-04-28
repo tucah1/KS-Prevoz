@@ -4,6 +4,8 @@ import { deleteFavoriteLine, getFavorites } from "../actions/user";
 import { connect } from "react-redux";
 import { loadUser } from "../actions/auth";
 
+import Spinner from "./Spinner";
+
 const Favorites = ({
     getFavorites,
     favorites,
@@ -17,7 +19,7 @@ const Favorites = ({
     return (
         <>
             {loading ? (
-                <> Loading</>
+                <Spinner />
             ) : (
                 <>
                     <div className="favorites">
@@ -44,7 +46,7 @@ const Favorites = ({
                                                         {fav.to_point}
                                                     </p>
                                                     <p className="fav-line-type">
-                                                        Bus
+                                                        {fav.transport_type}
                                                     </p>
                                                 </div>
                                                 <button

@@ -23,7 +23,7 @@ export const Login = ({
     };
 
     const handleGoogleLogin = (googleData) => {
-        googleLogin(googleData.getAuthResponse().id_token);
+        googleLogin(googleData.tokenId);
     };
 
     if (isAuthenticated) {

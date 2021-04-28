@@ -59,17 +59,34 @@ export const Navbar = ({ isAuthenticated, logout, userLevel, initials }) => {
                 >
                     <ul className="navbar-nav nav-middle">
                         <li className="nav-item">
-                            <Link to="/" className="navbar-link">
-                                {" "}
-                                SCHEDULES{" "}
-                            </Link>
+                            {isAuthenticated && userLevel === 2 ? (
+                                <>
+                                    <Link
+                                        to="/schedule-list"
+                                        className="navbar-link"
+                                    >
+                                        {" "}
+                                        SCHEDULES{" "}
+                                    </Link>
+                                </>
+                            ) : (
+                                <>
+                                    <Link
+                                        to="/#schedule"
+                                        className="navbar-link"
+                                    >
+                                        {" "}
+                                        SCHEDULES{" "}
+                                    </Link>
+                                </>
+                            )}
                         </li>
                         <li className="nav-item">
                             <Link to="/find-routes" className="navbar-link">
                                 FIND ROUTES
                             </Link>
                         </li>
-                        {isAuthenticated && userLevel == 1 ? (
+                        {isAuthenticated && userLevel === 1 ? (
                             <>
                                 <li className="nav-item">
                                     <Link
@@ -82,7 +99,7 @@ export const Navbar = ({ isAuthenticated, logout, userLevel, initials }) => {
                                 </li>
                             </>
                         ) : null}
-                        {isAuthenticated && userLevel == 2 ? (
+                        {isAuthenticated && userLevel === 2 ? (
                             <>
                                 <li className="nav-item">
                                     <Link

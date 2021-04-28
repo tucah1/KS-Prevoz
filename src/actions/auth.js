@@ -7,6 +7,9 @@ import {
     LOGIN_SUCCESS,
     LOGOUT,
     CLEAR_USER,
+    REQUEST,
+    SUCCESS,
+    FAILURE,
 } from "./types";
 import api from "../utils/api";
 import { setAlert } from "./alert";
@@ -14,16 +17,19 @@ import { setAlert } from "./alert";
 // Load User
 export const loadUser = () => async (dispatch) => {
     const config = {
-        headers: { "Cache-Control": "max-age=0" },
+        // headers: { "Cache-Control": "max-age=0" },
     };
 
     try {
+        dispatch({ type: REQUEST });
         const res = await api.get("/auth", config);
         dispatch({
             type: USER_LOADED,
             payload: res.data,
         });
+        dispatch({ type: SUCCESS });
     } catch (err) {
+        dispatch({ type: FAILURE });
         dispatch({
             type: AUTH_ERROR,
         });

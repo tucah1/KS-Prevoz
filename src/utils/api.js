@@ -3,7 +3,7 @@ import store from "../store";
 import { LOGOUT } from "../actions/types";
 
 const api = axios.create({
-    baseURL: "http://localhost:8080/api",
+    baseURL: "https://ksprevoz.herokuapp.com/api",
     headers: {
         "Content-Type": "application/json",
     },

@@ -1,11 +1,11 @@
-import React, { Fragment } from "react";
+import React from "react";
 import { Route, Redirect } from "react-router-dom";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 
 const PrivateRoute = ({
     component: Component,
-    auth: { isAuthenticated, loading, userLevel },
+    auth: { isAuthenticated, loading },
     ...rest
 }) => (
     <Route
@@ -18,10 +18,7 @@ const PrivateRoute = ({
             ) : isAuthenticated ? (
                 <Component {...props} />
             ) : (
-                <>
-                    {console.log("redirect")}
-                    <Redirect to="/" />
-                </>
+                <Redirect to="/" />
             )
         }
     />

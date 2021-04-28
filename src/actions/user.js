@@ -57,9 +57,7 @@ export const getFavorites = () => async (dispatch) => {
         dispatch({ type: SUCCESS });
     } catch (err) {
         console.log(err.response);
-        dispatch({
-            type: FAILURE,
-        });
+        dispatch({ type: FAILURE });
     }
 };
 

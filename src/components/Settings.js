@@ -117,7 +117,7 @@ const Settings = ({ user, updateSettings, setAlert }) => {
                                         value={firstName}
                                         required
                                         onChange={(e) => onChange(e)}
-                                        placeholder="Email"
+                                        placeholder="First name"
                                     />
                                 </label>
                                 <label>
@@ -129,7 +129,7 @@ const Settings = ({ user, updateSettings, setAlert }) => {
                                         value={lastName}
                                         onChange={(e) => onChange(e)}
                                         required
-                                        placeholder="Email"
+                                        placeholder="Last name"
                                     />
                                 </label>
                                 <label>

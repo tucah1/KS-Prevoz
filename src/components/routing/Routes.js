@@ -7,6 +7,8 @@ import Navbar from "../Navbar";
 import Favorites from "../Favorites";
 import Alert from "../Alert";
 import PrivateRoute from "./PrivateRoute";
+import AdminRoute from "./AdminRoute";
+import ScheduleList from "../ScheduleAdmin/ScheduleList";
 
 const Routes = () => {
     return (
@@ -20,6 +22,11 @@ const Routes = () => {
                         exact
                         path="/favorites"
                         component={Favorites}
+                    />
+                    <AdminRoute
+                        exact
+                        path="/schedule-list"
+                        component={ScheduleList}
                     />
                 </Switch>
             </Router>
