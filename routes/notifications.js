@@ -18,7 +18,7 @@ router.get(
 	async (req, res) => {
 		try {
 			const connection = await getConnection()
-			let result = await connection.query('SELECT * FROM notification')
+			let result = await connection.query('SELECT * FROM notification ORDER BY date_of_creation DESC')
 			connection.release()
 			return res.status(200).json(result[0])
 		} catch (error) {
@@ -97,7 +97,7 @@ router.post(
 			connection.release()
 
 			return res
-				.status(422)
+				.status(201)
 				.json({ message: 'Notification sent successfully!' })
 		} catch (error) {
 			return res
