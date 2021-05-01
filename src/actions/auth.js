@@ -38,14 +38,8 @@ export const loadUser = () => async (dispatch) => {
 
 // Register User
 export const register = (formData) => async (dispatch) => {
-    const config = {
-        headers: {
-            "Content-Type": "application/json",
-        },
-    };
-
     try {
-        const res = await api.post("/auth/register", formData, config);
+        const res = await api.post("/auth/register", formData);
 
         dispatch({
             type: REGISTER_SUCCESS,
@@ -73,13 +67,8 @@ export const register = (formData) => async (dispatch) => {
 
 // Login User
 export const login = (email, password) => async (dispatch) => {
-    const config = {
-        headers: {
-            "Content-Type": "application/json",
-        },
-    };
     try {
-        const res = await api.post("/auth/login", { email, password }, config);
+        const res = await api.post("/auth/login", { email, password });
 
         dispatch({
             type: LOGIN_SUCCESS,

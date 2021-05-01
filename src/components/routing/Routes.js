@@ -9,6 +9,8 @@ import Alert from "../Alert";
 import PrivateRoute from "./PrivateRoute";
 import AdminRoute from "./AdminRoute";
 import ScheduleList from "../ScheduleAdmin/ScheduleList";
+import Notifications from "../Notifications/Notifications";
+import About from "../About";
 
 const Routes = () => {
     return (
@@ -18,6 +20,7 @@ const Routes = () => {
                 <Navbar />
                 <Switch>
                     <Route exact path="/" component={Landing} />
+                    <Route exact path="/about" component={About} />
                     <PrivateRoute
                         exact
                         path="/favorites"
@@ -27,6 +30,11 @@ const Routes = () => {
                         exact
                         path="/schedule-list"
                         component={ScheduleList}
+                    />
+                    <AdminRoute
+                        exact
+                        path="/notifications"
+                        component={Notifications}
                     />
                 </Switch>
             </Router>
