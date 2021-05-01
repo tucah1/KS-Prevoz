@@ -97,7 +97,7 @@ router.post(
 			connection.release()
 
 			return res
-				.status(201)
+				.status(200)
 				.json({ message: 'Notification sent successfully!' })
 		} catch (error) {
 			return res
