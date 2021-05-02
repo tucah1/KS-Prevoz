@@ -30,9 +30,8 @@ export const addNewLine = (formData) => async (dispatch) => {
         // dispatch({ type: REQUEST });
         console.log(formData);
         const res = await api.post(`/line/add-line`, formData);
-
+        dispatch(getScheduleList());
         dispatch(setAlert(res.data.message, "success"));
-        // dispatch({ type: SUCCESS });
     } catch (err) {
         console.log(err.response);
         if (err.response) {
@@ -81,12 +80,10 @@ export const removeScheduleFile = (url) => (dispatch) => {
 
 export const editLine = (formData) => async (dispatch) => {
     try {
-        // dispatch({ type: REQUEST });
-        // console.log(formData);
         const res = await api.post(`/line/edit-line`, formData);
 
+        dispatch(getScheduleList());
         dispatch(setAlert(res.data.message, "success"));
-        // dispatch({ type: SUCCESS });
     } catch (err) {
         console.log(err.response);
         if (err.response) {
@@ -107,6 +104,7 @@ export const editLine = (formData) => async (dispatch) => {
 export const deleteLine = (id) => async (dispatch) => {
     try {
         const res = await api.delete(`/line/delete-line/${id}`);
+        dispatch(getScheduleList());
         dispatch(setAlert(res.data.message, "success"));
     } catch (err) {
         console.log(err.response);

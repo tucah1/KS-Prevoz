@@ -96,20 +96,11 @@ export const login = (email, password) => async (dispatch) => {
 
 //google login and register
 export const googleLogin = (token) => async (dispatch) => {
-    const config = {
-        headers: {
-            "Content-Type": "application/json",
-        },
-    };
     try {
-        console.log(token);
-        const res = await api.post(
-            "/auth/google/callback",
-            { googleToken: token },
-            config
-        );
+        const res = await api.post("/auth/google/callback", {
+            googleToken: token,
+        });
 
-        console.log(res.data);
         dispatch({
             type: LOGIN_SUCCESS,
             payload: res.data,

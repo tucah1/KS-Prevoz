@@ -10,6 +10,7 @@ export const EditLine = ({
     tPoint,
     lId,
     tType,
+    handleClose,
     lineScheduleFile,
     getLineScheduleFile,
     editLine,
@@ -38,6 +39,7 @@ export const EditLine = ({
 
     const { fromPoint, toPoint, transportType, lineId, file } = formData;
 
+    const [fileBtnName, setfileBtnName] = useState("");
     const onChange = (e) => {
         const val =
             e.target.type === "text"
@@ -54,6 +56,9 @@ export const EditLine = ({
             ...formData,
             file: e.target.files[0],
         });
+
+        if (e.target.files[0])
+            setfileBtnName(e.target.files[0].name.substring(0, 15) + "...");
     };
     //delete line logic
     const [modalDeleteLine, setmodalDeleteLine] = useState(false);
@@ -69,6 +74,7 @@ export const EditLine = ({
     const handleDeleteLineYes = () => {
         deleteLine(lineId);
         setmodalDeleteLine(false);
+        handleClose();
     };
     //submit changes
     const onSubmit = (e) => {
@@ -87,12 +93,13 @@ export const EditLine = ({
     return (
         <>
             <div className="modal-wrapper">
-                <div className="login add-new-line">
-                    <h5 className="set-heading">Edit Line</h5>
+                <div className="add-line">
+                    <h5 className="addline-heading">Line settings</h5>
                     <form
                         onSubmit={(e) => {
                             onSubmit(e);
                         }}
+                        className="addline-form d-flex flex-column"
                     >
                         <input
                             type="text"
@@ -117,7 +124,7 @@ export const EditLine = ({
                             required
                         />
                         <select
-                            className="input"
+                            className="input addline-select"
                             required
                             name="transportType"
                             value={transportType}
@@ -138,40 +145,56 @@ export const EditLine = ({
                             <option value="Trolley">Trolley</option>
                             <option value="Minibus">Minibus</option>
                         </select>
+
+                        <label htmlFor="scheduleFile" className="upload-file">
+                            {fileBtnName === ""
+                                ? "Upload schedule"
+                                : fileBtnName}
+                            <input
+                                type="file"
+                                name="file"
+                                id="scheduleFile"
+                                accept=".csv"
+                                required
+                                onChange={(e) => {
+                                    handleFileUpload(e);
+                                }}
+                            />
+                        </label>
+                        <p>
+                            {" "}
+                            Only .csv file is suported. Click{" "}
+                            <a href="" className="purple">
+                                <strong>here</strong>
+                            </a>{" "}
+                            to download sample file.
+                        </p>
+
                         <a
                             href={lineScheduleFile}
+                            className="upload-file"
                             download={`${fromPoint} - ${toPoint} - ${transportType}.csv`}
                         >
                             Export .csv
                         </a>
-                        {/* <button
-                            style={{ display: "block" }}
-                            onClick={() => {
-                                document.getElementById("scheduleFile").click();
-                            }}
-                        >
-                            Upload schedule
-                        </button> */}
-                        <input
-                            type="file"
-                            name="file"
-                            id="scheduleFile"
-                            accept=".csv"
-                            onChange={(e) => {
-                                handleFileUpload(e);
-                            }}
-                            // style={{ display: "none" }}
-                        />
-                        <button
-                            onClick={(e) => {
-                                e.preventDefault();
-                                setmodalDeleteLine(true);
-                            }}
-                        >
-                            Delete line
-                        </button>
-                        <br />
-                        <button>Edit line</button>
+
+                        <p>Download existing schedule.</p>
+
+                        <div className="ml-auto edit-btns">
+                            <button
+                                onClick={(e) => {
+                                    e.preventDefault();
+                                    setmodalDeleteLine(true);
+                                }}
+                                className="button-emp delete-line-btn"
+                            >
+                                Delete
+                            </button>
+
+                            <button className="button-emp  ml-auto">
+                                Save
+                            </button>
+                        </div>
                     </form>
                 </div>
             </div>

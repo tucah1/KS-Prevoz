@@ -20,6 +20,14 @@ p {
     margin: 0;
 }
 
+.purple {
+    color: var(--purpleLight);
+}
+
+.purple:hover {
+    color: var(--purpleLight);
+}
+
 button {
     background-color: transparent;
     border: none;
@@ -50,6 +58,8 @@ button:hover {
     -moz-box-shadow: -4px 5px 18px -4px rgba(0, 0, 0, 0.15);
     white-space: nowrap;
     color: #fff !important;
+    letter-spacing: 0.05em;
+    font-size: 18px;
 }
 
 .button-emp:hover {
@@ -367,7 +377,6 @@ button:hover {
     outline: none;
     border: 2px solid var(--yellow);
 }
-
 .add-new-line {
     font-size: 20px;
     letter-spacing: 1px;
@@ -537,6 +546,7 @@ label {
     margin-bottom: 2px;
     max-width: 300px;
     min-width: 180px;
+    width: 100%;
     background: #eaeef5;
     border-radius: 10px;
     height: 45px;
@@ -546,6 +556,7 @@ label {
     font-weight: 600;
     letter-spacing: 0.05em;
     color: var(--purpleLight);
+    border: 1px solid #eaeef5;
 }
 label > input {
     margin-left: -10px;
@@ -620,10 +631,121 @@ label > input {
     margin-right: 0 !important;
 }
 
-/* ! ADD NEW LINE */
+/* ! ADD/EDIT/DELETE LINE  */
 
-.add-new-line {
+.add-line {
     text-align: left;
+    background-color: #fff;
+    border-radius: 20px;
+    padding: 30px 30px 20px;
+    max-width: 340px;
+}
+
+.addline-heading {
+    display: inline-block;
+    font-weight: 600;
+    font-size: 20px;
+    margin: 5px 0 20px;
+    color: var(--purpleLight);
+}
+
+.addline-form input {
+    margin: 10px auto;
+}
+
+.addline-select {
+    margin: 10px auto;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+}
+
+.addline-select option {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    box-shadow: none;
+    margin: 10px;
+}
+
+.addline-btn {
+    width: 110px;
+    /* font-size: 17px; */
+    margin-top: 20px;
+}
+
+.addline-form p {
+    font-size: 12px;
+    margin: 0 10px 10px;
+    letter-spacing: 0.05em;
+    color: #6a7580;
+    max-width: 200px;
+}
+
+#scheduleFile {
+    display: none;
+}
+.upload-file {
+    text-align: center;
+    padding: 8px 15px;
+    width: fit-content;
+    border-radius: 30px;
+    background: linear-gradient(
+        95.95deg,
+        #474784 14.28%,
+        #484785 14.29%,
+        #494886 14.3%,
+        #8d74e6 81.28%
+    );
+    box-shadow: 5px 12px 27px 5px rgba(0, 0, 0, 0.05);
+    margin: 10px 0 5px;
+    color: #fff;
+    font-weight: 600;
+    font-size: 17px;
+    letter-spacing: 0.07em;
+}
+
+.upload-file:hover {
+    cursor: pointer;
+    color: #fff;
+}
+.edit-btns {
+    margin-top: 20px;
+}
+
+.delete-line-btn {
+    margin-right: 15px;
+    background: linear-gradient(91.48deg, #ea4335 6.69%, #cd3a2d 94.81%);
+}
+
+.delete-line {
+    max-width: 400px;
+}
+
+.delete-yes {
+    margin-left: 15px;
+    background: linear-gradient(91.48deg, #ea4335 6.69%, #cd3a2d 94.81%);
+}
+
+.delete-line-heading {
+    color: var(--purpleLight);
+    font-style: normal;
+    font-weight: 600;
+    font-size: 19px;
+    line-height: 25px;
+}
+
+.delete-line-heading span {
+    color: var(--yellow);
+}
+
+.delete-btns {
+    margin-top: 20px;
+}
+
+.delete-line p {
+    color: #6a7580;
+    margin: 10px 0;
 }
 
 /* ! NOTIFICATIONS */

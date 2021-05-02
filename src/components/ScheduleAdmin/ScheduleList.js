@@ -24,14 +24,13 @@ export const ScheduleList = ({
 
     const handleAddNewLineModalClose = () => {
         setmodalAddnewLine(false);
-        getScheduleList();
+        // getScheduleList();
     };
     //edit line
     const [modalEditLine, setmodalEditLine] = useState(false);
 
     const handleEditLineModalClose = () => {
         setmodalEditLine(false);
-        getScheduleList();
         removeScheduleFile(lineScheduleFile);
     };
 
@@ -145,6 +144,7 @@ export const ScheduleList = ({
                                 tPoint={editlineData.toPoint}
                                 lId={editlineData.lineId}
                                 tType={editlineData.transType}
+                                handleClose={handleEditLineModalClose}
                             />
                         </>
                     </Modal>

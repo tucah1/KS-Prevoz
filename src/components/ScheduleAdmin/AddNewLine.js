@@ -13,6 +13,8 @@ export const AddNewLine = ({ addNewLine }) => {
 
     const { fromPoint, toPoint, transportType, file } = formData;
 
+    const [fileBtnName, setfileBtnName] = useState("");
+
     const onChange = (e) => {
         const val =
             e.target.type === "text"
@@ -25,7 +27,6 @@ export const AddNewLine = ({ addNewLine }) => {
     };
 
     const handleFileUpload = (e) => {
-        console.log(e.target.files[0]);
         if (
             fromPoint.length === 0 &&
             toPoint.length === 0 &&
@@ -52,6 +53,8 @@ export const AddNewLine = ({ addNewLine }) => {
                 file: e.target.files[0],
             });
         }
+        if (e.target.files[0])
+            setfileBtnName(e.target.files[0].name.substring(0, 15) + "...");
     };
 
     const onSubmit = (e) => {
@@ -74,12 +77,13 @@ export const AddNewLine = ({ addNewLine }) => {
     return (
         <>
             <div className="modal-wrapper">
-                <div className="login add-new-line">
-                    <h5 className="set-heading">Add new Line</h5>
+                <div className="add-line">
+                    <h5 className="addline-heading">Add new line</h5>
                     <form
                         onSubmit={(e) => {
                             onSubmit(e);
                         }}
+                        className="addline-form d-flex flex-column"
                     >
                         <input
                             type="text"
@@ -104,7 +108,7 @@ export const AddNewLine = ({ addNewLine }) => {
                             required
                         />
                         <select
-                            className="input"
+                            className="input addline-select"
                             required
                             name="transportType"
                             value={transportType}
@@ -125,27 +129,34 @@ export const AddNewLine = ({ addNewLine }) => {
                             <option value="Trolley">Trolley</option>
                             <option value="Minibus">Minibus</option>
                         </select>
-                        {/* <button
-                            style={{ display: "block" }}
-                            onClick={() => {
-                                document.getElementById("scheduleFile").click();
-                            }}
-                        >
-                            Upload schedule
-                        </button> */}
-                        <input
-                            type="file"
-                            name="file"
-                            id="scheduleFile"
-                            accept=".csv"
-                            required
-                            onChange={(e) => {
-                                handleFileUpload(e);
-                            }}
-                            // style={{ display: "none" }}
-                        />
 
-                        <button>Add line</button>
+                        <label htmlFor="scheduleFile" className="upload-file">
+                            {fileBtnName === ""
+                                ? "Upload schedule"
+                                : fileBtnName}
+                            <input
+                                type="file"
+                                name="file"
+                                id="scheduleFile"
+                                accept=".csv"
+                                required
+                                onChange={(e) => {
+                                    handleFileUpload(e);
+                                }}
+                            />
+                        </label>
+
+                        <p>
+                            Only .csv file is suported. Click{" "}
+                            <a href="" className="purple">
+                                <strong>here</strong>
+                            </a>{" "}
+                            to download sample file.
+                        </p>
+
+                        <button className="button-emp addline-btn ml-auto">
+                            Add line
+                        </button>
                     </form>
                 </div>
             </div>
