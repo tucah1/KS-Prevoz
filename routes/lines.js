@@ -183,17 +183,33 @@ router.delete(
 	}
 )
 
-// @route       GET api/line/lines/:page_no/:item_limit
+// @route       GET api/line/lines/:page_no/:item_limit/:search_text/:t_type
 // @desc        Get list of all lines
 // @access      Private
 router.get(
-	'/lines/:page_no/:item_limit',
+	'/lines/:page_no/:item_limit/:search_text/:t_type',
 	[authMiddleware, adminAuthMiddleware],
 	async (req, res) => {
 		try {
-			let { page_no, item_limit } = req.params
+			let { page_no, item_limit, search_text, t_type } = req.params
 			page_no = parseInt(page_no)
 			item_limit = parseInt(item_limit)
+			t_type = ['all', 'bus', 'tram', 'trolley'].includes(t_type.trim().toLowerCase()) ? t_type.trim().toLowerCase() : 'all'
+			search_text = search_text.trim().toLowerCase()
+			let search_query = 'SELECT line_id, from_point, to_point, transport_type FROM line'
+			
+			if (search_text !== '_') {
+				let tokens = search_text.split('-')
+				if (tokens.length === 1) {
+					search_query += ` WHERE (LOWER(from_point) LIKE '%${tokens[0].trim()}%' OR LOWER(to_point) LIKE '%${tokens[0].trim()}%')`
+				} else {
+					search_query += ` WHERE (LOWER(from_point) LIKE '%${tokens[0].trim()}%' AND LOWER(to_point) LIKE '%${tokens[1].trim()}%')`
+				}
+			}
+			if (t_type !== 'all') {
+				search_query += ` ${search_text !== '_' ? 'AND' : 'WHERE'} LOWER(transport_type) = '${t_type}'`
+			}
+			search_query += ' ORDER BY from_point LIMIT ?,?'
 
 			const connection = await getConnection()
 			let countRes = await connection.query(
@@ -201,11 +217,15 @@ router.get(
 			)
 			let numberOfPages = Math.ceil(countRes[0][0].count / item_limit)
 			let result = await connection.query(
-				'SELECT line_id, from_point, to_point, transport_type FROM line ORDER BY from_point LIMIT ?,?',
+				search_query,
 				[(page_no - 1) * item_limit, item_limit]
 			)
 			connection.release()
-			return res.json(result[0])
+			return res.json({
+				pages_number: numberOfPages,
+				current_page: page_no,
+				data: result[0]
+			})
 		} catch (error) {
 			console.log(error)
 			return res
