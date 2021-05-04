@@ -1,6 +1,7 @@
 const drive = require('../config/driveStorage')
 const fs = require('fs')
 const path = require('path')
+const csv = require('csv-parser')
 
 const genIds = (numOfIds) => {
 	return new Promise((resolve, reject) => {
@@ -66,6 +67,41 @@ exports.downloadFile = (fileId, response) => {
 				})
 				.pipe(response)
 		})
+}
+
+exports.readFile = (fileId) => {
+	return new Promise((resolve, reject) => {
+		try {
+			let obj = {
+				weekday1: [],
+				weekday2: [],
+				saturday1: [],
+				saturday2: [],
+				sunday1: [],
+				sunday2: [],
+			}
+			drive.files.get({
+				fileId,
+				alt: 'media'
+			}, {
+				responseType: 'stream'
+			}).then((res) => {
+				res.data.on('error', (err) => {
+					throw err
+				}).pipe(csv()).on('data', (data) => {
+					Object.entries(data).forEach(([key, value]) => {
+						if (value !== "") {
+							obj[key].push(value)
+						}
+					})
+				}).on('end', () => {
+					resolve(obj)
+				})
+			})
+		} catch (error) {
+			reject(error)
+		}
+	})
 }
 
 exports.deleteDriveFile = (fileId) => {

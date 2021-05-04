@@ -12,7 +12,7 @@
 //				and return all results that match with either value
 //				- results are always sorted alphabetically by from_point regardless of search parameters
 
-// t_type:		- possible values: ['all', 'bus', 'tram', 'trolley']
+// t_type:		- possible values: ['all', 'bus', 'minibus', 'tram', 'trolley']
 //				- if value is something else, t_type will be converted to 'all' by the server
 
 // * Return object:
@@ -37,7 +37,7 @@ const get_lines_return = {
 
 // ! ###############################################
 // @route       GET api/line/schedule/:line_id
-// @desc        Get schedule for single line
+// @desc        Get schedule file for single line
 // @access      Public
 // * Return object:
 // Don't know how to describe this object. It's a file piped to the response object. See the code below:
@@ -81,4 +81,17 @@ const edit_line_return = {
 // @access      Private - Admin
 const delete_line_return = {
 	message: 'Line deleted successfully!',
+}
+
+// ! ###############################################
+// @route       GET api/line/schedule-json/:line_id
+// @desc        Get schedule for single line in json format
+// @access      Public
+const get_schedule_json_return = {
+	weekday1: [],
+	weekday2: [],
+	saturday1: [],
+	saturday2: [],
+	sunday1: [],
+	sunday2: [],
 }

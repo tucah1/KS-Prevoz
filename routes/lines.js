@@ -1,7 +1,4 @@
 const express = require('express')
-const uuid = require('uuid')
-const fs = require('fs')
-const path = require('path')
 const { body, validationResult } = require('express-validator')
 
 const getConnection = require('../config/database')
@@ -14,6 +11,7 @@ const {
 	uploadFile,
 	downloadFile,
 	deleteDriveFile,
+	readFile,
 } = require('../util/driveHandler')
 
 const router = express.Router()
@@ -194,7 +192,7 @@ router.get(
 			let { page_no, item_limit, search_text, t_type } = req.params
 			page_no = parseInt(page_no)
 			item_limit = parseInt(item_limit)
-			t_type = ['all', 'bus', 'tram', 'trolley'].includes(t_type.trim().toLowerCase()) ? t_type.trim().toLowerCase() : 'all'
+			t_type = ['all', 'bus', 'minibus', 'tram', 'trolley'].includes(t_type.trim().toLowerCase()) ? t_type.trim().toLowerCase() : 'all'
 			search_text = search_text.trim().toLowerCase()
 			let search_query = 'SELECT line_id, from_point, to_point, transport_type FROM line'
 			
@@ -236,7 +234,7 @@ router.get(
 )
 
 // @route       GET api/line/schedule/:line_id
-// @desc        Get schedule for single line
+// @desc        Get schedule file for single line
 // @access      Public
 router.get('/schedule/:line_id', async (req, res) => {
 	try {
@@ -249,6 +247,26 @@ router.get('/schedule/:line_id', async (req, res) => {
 		const { schedule_file } = result[0][0]
 
 		downloadFile(schedule_file, res)
+	} catch (error) {
+		console.log(error)
+		return res
+			.status(500)
+			.json({ errors: [{ code: 500, message: 'Server error' }] })
+	}
+})
+
+// @route       GET api/line/schedule-json/:line_id
+// @desc        Get schedule for single line in json format
+// @access      Public
+router.get('/schedule-json/:line_id', async (req, res) => {
+	try {
+		const connection = await getConnection()
+		let result = await connection.query('SELECT schedule_file FROM line WHERE line_id = ?', req.params.line_id)
+		connection.release()
+		const {schedule_file} = result[0][0]
+
+		let obj = await readFile(schedule_file)
+		return res.json(obj)
 	} catch (error) {
 		console.log(error)
 		return res
