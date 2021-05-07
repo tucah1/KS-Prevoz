@@ -1036,6 +1036,10 @@ textarea:focus {
     border-left: 6px solid #a48df8b0 !important;
 }
 
+.adp-listsel:hover {
+    background-color: #dfdcdc1f !important;
+}
+
 .adp-list > div:nth-child(2) > ol > li > div:nth-child(2) {
     margin-bottom: 10px;
     /* font-size: 20px; */
@@ -1053,6 +1057,14 @@ textarea:focus {
     letter-spacing: 0.05em;
     text-transform: uppercase;
     font-weight: 350 !important;
+}
+
+.adp-list > div:nth-child(2) > ol > li > div:nth-child(3) span:nth-child(1) {
+    margin-right: 5px;
+}
+
+.adp-list > div:nth-child(2) > ol > li > div:nth-child(3) span:nth-child(2) {
+    margin-left: 5px;
 }
 
 /* TEMP */
