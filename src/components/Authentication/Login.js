@@ -59,7 +59,10 @@ export const Login = ({
                                 onChange={(e) => onChange(e)}
                             />
                         </div>
-                        <div className="login-buttons d-flex justify-content-between">
+                        <div className="login-buttons d-flex flex-row-reverse justify-content-between">
+                            <button className="button-emp" type="submit">
+                                Sign in
+                            </button>
                             <GoogleLogin
                                 clientId={
                                     process.env.REACT_APP_GOOGLE_CLIENT_ID
@@ -77,10 +80,9 @@ export const Login = ({
                                 icon={false}
                                 disabledStyle={true}
                                 onSuccess={handleGoogleLogin}
-                                onFailure={handleGoogleLogin}
+                                // onFailure={handleGoogleLogin}
                                 cookiePolicy={"single_host_origin"}
                             />
-                            <button className="button-emp">Sign in</button>
                         </div>
                         <p className="login-text">
                             don’t have account?{" "}

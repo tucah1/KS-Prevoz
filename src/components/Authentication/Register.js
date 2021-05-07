@@ -105,7 +105,10 @@ export const Register = ({
                                 required
                             />
                         </div>
-                        <div className="login-buttons d-flex justify-content-between">
+                        <div className="login-buttons d-flex flex-row-reverse justify-content-between">
+                            <button className="button-emp" type="submit">
+                                Sign up
+                            </button>
                             <GoogleLogin
                                 clientId={
                                     process.env.REACT_APP_GOOGLE_CLIENT_ID
@@ -123,10 +126,9 @@ export const Register = ({
                                 icon={false}
                                 disabledStyle={true}
                                 onSuccess={handleGoogleLogin}
-                                onFailure={handleGoogleLogin}
+                                // onFailure={handleGoogleLogin}
                                 cookiePolicy={"single_host_origin"}
                             />
-                            <button className="button-emp">Sign up</button>
                         </div>
                         <p className="login-text">
                             don’t have account?{" "}

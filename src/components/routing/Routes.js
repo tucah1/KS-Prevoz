@@ -11,6 +11,7 @@ import AdminRoute from "./AdminRoute";
 import ScheduleList from "../ScheduleAdmin/ScheduleList";
 import Notifications from "../Notifications/Notifications";
 import About from "../About";
+import FindRoutes from "../FindRoutes/FindRoutes";
 
 const Routes = () => {
     return (
@@ -21,6 +22,7 @@ const Routes = () => {
                 <Switch>
                     <Route exact path="/" component={Landing} />
                     <Route exact path="/about" component={About} />
+                    <Route exact path="/find-routes" component={FindRoutes} />
                     <PrivateRoute
                         exact
                         path="/favorites"
