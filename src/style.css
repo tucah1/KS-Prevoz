@@ -33,7 +33,8 @@ button {
     border: none;
 }
 
-button:focus {
+button:focus,
+a:focus {
     outline: none;
 }
 
@@ -97,6 +98,60 @@ button:hover {
     border-radius: 15px;
 }
 
+/* !FOOTER */
+
+.footer-wrapper {
+    margin-top: 50px;
+}
+
+.footer-wave {
+    height: 63px;
+    width: 100%;
+    background: url(images/footer-wave.png);
+}
+
+.footer {
+    background-color: #f1f5fb;
+    padding: 30px 15%;
+    width: 100%;
+    font-weight: 700;
+    font-size: 14px;
+}
+
+.footer .navbar-link,
+.footer .navbar-brand,
+.footer .navbar-brand span {
+    color: #b4b8bd;
+}
+
+.footer .navbar-link:hover,
+.footer .navbar-brand:hover,
+.footer .navbar-brand:hover span {
+    color: var(--purpleDark);
+}
+
+.footer .navbar-brand {
+    font-size: 20px;
+    transform: none;
+}
+
+.footer .nav-middle {
+    width: 100%;
+}
+
+.footer-bottom {
+    width: 100%;
+    padding: 5px 5%;
+    background-color: #dee4ee;
+}
+
+.footer-bottom p {
+    font-size: 15px;
+    letter-spacing: 0.11em;
+
+    color: #9b9fa4;
+}
+
 /* ! NAVBAR */
 .navbar-brand,
 .nav-item {
@@ -109,12 +164,12 @@ button:hover {
     font-weight: 600;
     font-size: 18px;
     letter-spacing: 2px;
-    transition: all 0.5s ease-in-out;
-    background-color: transparent;
-    color: #fff;
-    /* box-shadow: 1px 3px 3px rgba(0, 0, 0, 0.1); */
+    transition: all 0.4s ease-in-out;
+    background-color: #fff;
+    box-shadow: 1px 3px 3px rgba(0, 0, 0, 0.1);
     height: 40px;
-    padding: 65px 10% 40px;
+    color: var(--purpleDark);
+    padding: 35px 9%;
     justify-content: space-between;
     white-space: nowrap;
     z-index: 100;
@@ -124,11 +179,15 @@ button:hover {
     font-family: "Roboto", sans-serif;
     font-size: 25px;
     transform: translateY(-3px);
+    color: var(--purpleDark);
+}
+
+.nav-top .navbar-brand {
     color: #fff;
 }
 
 .navbar-brand:hover {
-    color: #fff;
+    color: var(--yellow);
 }
 
 .navbar-brand span {
@@ -142,7 +201,7 @@ button:hover {
 }
 
 .navbar-link {
-    color: #fff;
+    color: var(--purpleDark);
     letter-spacing: 2px;
 }
 
@@ -165,21 +224,22 @@ button:hover {
     cursor: pointer;
 }
 
-.scrolling-active {
-    color: var(--purpleDark);
-    padding: 35px 10%;
-    background-color: #fff;
+.nav-top {
+    color: #fff;
+    padding: 65px 10% 40px;
+    background-color: transparent;
+    box-shadow: none;
 }
 
-.scrolling-active .navbar-link {
-    color: var(--purpleDark);
+.nav-top .navbar-link {
+    color: #fff;
 }
 
 .navbar-link:hover {
     color: var(--yellow);
 }
 
-.scrolling-active .show {
+.nav-top .show {
     background-color: #fff;
 }
 

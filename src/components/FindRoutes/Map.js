@@ -17,10 +17,10 @@ const Map = () => {
     const mapOptions = useMemo(() => {
         return {
             gestureHandling: "greedy",
-            zoom: 12,
+            zoom: 13,
             center: {
-                lat: 43.85283490767446,
-                lng: 18.39127894082131,
+                lat: 43.84662290995682,
+                lng: 18.354884835620837,
             },
             fullscreenControl: false,
             streetViewControl: false,

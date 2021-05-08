@@ -9,7 +9,59 @@ import Login from "./Authentication/Login";
 import Register from "./Authentication/Register";
 import Settings from "./Settings";
 
-export const Navbar = ({ isAuthenticated, logout, userLevel, initials }) => {
+export const Navbar = ({
+    isAuthenticated,
+    logout,
+    userLevel,
+    initials,
+    scrollActive,
+}) => {
+    useEffect(() => {
+        const nav = document.querySelector("nav");
+        if (nav !== null) {
+            if (scrollActive && window.innerWidth > 992) {
+                nav.classList.add("nav-top");
+                window.addEventListener("scroll", () => {
+                    if (nav !== null) {
+                        nav.classList.toggle(
+                            "nav-top",
+                            window.scrollY < 100 && window.innerWidth > 991
+                        );
+                    }
+                });
+
+                return () => {
+                    window.removeEventListener("scroll", () => {});
+                };
+            } else if (scrollActive !== true && window.innerWidth < 992) {
+                nav.classList.remove("nav-top");
+            }
+        }
+
+        return () => {
+            window.removeEventListener("scroll", () => {});
+        };
+    }, [scrollActive]);
+
+    const [isMobile, setIsMobile] = useState(window.innerWidth < 991);
+
+    useEffect(() => {
+        window.addEventListener(
+            "resize",
+            () => {
+                const ismobile = window.innerWidth < 991;
+                if (ismobile !== isMobile) {
+                    setIsMobile(ismobile);
+                    const nav = document.querySelector("nav");
+                    if (nav !== null) {
+                        nav.classList.remove("nav-top");
+                    }
+                }
+            },
+            false
+        );
+    }, [isMobile]);
+
     useEffect(() => {
         if (isAuthenticated) {
             setmodalSigninup(false);
@@ -17,6 +69,9 @@ export const Navbar = ({ isAuthenticated, logout, userLevel, initials }) => {
             setuserOptions(false);
         }
     }, [isAuthenticated]);
+
+    const [displayNav, setdisplayNav] = useState(false);
+
     //modal for sign in/up
     const [modalSigninup, setmodalSigninup] = useState(false);
     //if authType is true, display Login, false -> display Register
@@ -47,14 +102,26 @@ export const Navbar = ({ isAuthenticated, logout, userLevel, initials }) => {
                     <span>KS</span> Prevoz
                 </Link>
                 <button
-                    className="navbar-toggler"
+                    className={
+                        displayNav
+                            ? "navbar-toggler"
+                            : " navbar-toggler collapsed"
+                    }
                     data-toggle="collapse"
                     data-target="#collapse_target"
+                    aria-expanded={displayNav}
+                    onClick={() => {
+                        setdisplayNav(!displayNav);
+                    }}
                 >
                     <i className="fas fa-bars"></i>
                 </button>
                 <div
-                    className="collapse navbar-collapse justify-content-between main-menu"
+                    className={
+                        displayNav
+                            ? "navbar-collapse justify-content-between main-menu collapse show "
+                            : "navbar-collapse justify-content-between main-menu collapse"
+                    }
                     id="collapse_target"
                 >
                     <ul className="navbar-nav nav-middle">

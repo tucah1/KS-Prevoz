@@ -12,13 +12,14 @@ import ScheduleList from "../ScheduleAdmin/ScheduleList";
 import Notifications from "../Notifications/Notifications";
 import About from "../About";
 import FindRoutes from "../FindRoutes/FindRoutes";
+import Footer from "../Footer";
 
 const Routes = () => {
     return (
         <>
             <Router>
                 <Alert />
-                <Navbar />
+                <Navbar scrollActive={true} />
                 <Switch>
                     <Route exact path="/" component={Landing} />
                     <Route exact path="/about" component={About} />
@@ -39,6 +40,7 @@ const Routes = () => {
                         component={Notifications}
                     />
                 </Switch>
+                <Footer />
             </Router>
         </>
     );
