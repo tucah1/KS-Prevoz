@@ -12,8 +12,7 @@ const initialState = {
     lineScheduleFile: null,
     notifications: [],
 };
-
-export default (state = initialState, action) => {
+const admin = (state = initialState, action) => {
     const { type, payload } = action;
 
     switch (type) {
@@ -44,3 +43,5 @@ export default (state = initialState, action) => {
             return state;
     }
 };
+
+export default admin;

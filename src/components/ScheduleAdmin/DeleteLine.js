@@ -29,6 +29,12 @@ const DeleteLine = ({ fromPoint, toPoint, transType, handleYes, handleNo }) => {
     );
 };
 
-DeleteLine.propTypes = {};
+DeleteLine.propTypes = {
+    fromPoint: PropTypes.string.isRequired,
+    toPoint: PropTypes.string.isRequired,
+    transType: PropTypes.string.isRequired,
+    handleNo: PropTypes.func.isRequired,
+    handleYes: PropTypes.func.isRequired,
+};
 
 export default DeleteLine;

@@ -1,10 +1,4 @@
-import React, {
-    useState,
-    useMemo,
-    useCallback,
-    useRef,
-    useEffect,
-} from "react";
+import React, { useState, useMemo, useCallback, useRef } from "react";
 import AutoCompleteInput from "./AutoCompleteInput";
 import {
     GoogleMap,

@@ -21,6 +21,10 @@ const NotificationItem = ({ subject, message, date }) => {
     );
 };
 
-NotificationItem.propTypes = {};
+NotificationItem.propTypes = {
+    subject: PropTypes.string.isRequired,
+    message: PropTypes.string.isRequired,
+    date: PropTypes.string.isRequired,
+};
 
 export default NotificationItem;

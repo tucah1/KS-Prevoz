@@ -5,7 +5,7 @@ const initialState = {
     errors: [],
 };
 
-export default (state = initialState, { type, payload }) => {
+const loading = (state = initialState, { type, payload }) => {
     switch (type) {
         case REQUEST:
             return {
@@ -28,3 +28,5 @@ export default (state = initialState, { type, payload }) => {
             return state;
     }
 };
+
+export default loading;

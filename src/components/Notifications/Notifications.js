@@ -12,7 +12,7 @@ export const Notifications = ({
 }) => {
     useEffect(() => {
         getNotifications();
-    }, []);
+    }, [getNotifications]);
     const [formData, setformData] = useState({
         subject: "",
         message: "",

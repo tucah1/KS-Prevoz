@@ -1,6 +1,4 @@
 import React from "react";
-import PropTypes from "prop-types";
-
 import illustration from "../../images/headingillustration.png";
 
 const Header = () => {
@@ -19,7 +17,7 @@ const Header = () => {
                             Lorem, ipsum dolor sit amet consectetur adipisicing
                             elit. Eligendi saepe consectetur unde aut provident
                         </p>
-                        <a href="" className="button-emp">
+                        <a href="#" className="button-emp">
                             Discover more
                         </a>
                     </div>
@@ -31,7 +29,5 @@ const Header = () => {
         </>
     );
 };
-
-Header.propTypes = {};
 
 export default Header;

@@ -2,7 +2,6 @@ import React, { useEffect, Fragment } from "react";
 import PropTypes from "prop-types";
 import { deleteFavoriteLine, getFavorites } from "../actions/user";
 import { connect } from "react-redux";
-import { loadUser } from "../actions/auth";
 
 import Spinner from "./Layout/Spinner";
 

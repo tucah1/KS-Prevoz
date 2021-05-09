@@ -14,7 +14,7 @@ const initialState = {
     initials: null,
 };
 
-export default (state = initialState, action) => {
+const user = (state = initialState, action) => {
     const { type, payload } = action;
 
     switch (type) {
@@ -59,3 +59,5 @@ export default (state = initialState, action) => {
             return state;
     }
 };
+
+export default user;

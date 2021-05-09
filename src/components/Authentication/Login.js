@@ -10,6 +10,7 @@ export const Login = ({
     isAuthenticated,
     login,
     googleLogin,
+    userLevel,
 }) => {
     const [formData, setFormData] = useState({ email: "", password: "" });
     const { email, password } = formData;
@@ -26,8 +27,12 @@ export const Login = ({
         googleLogin(googleData.tokenId);
     };
 
-    if (isAuthenticated) {
+    if (isAuthenticated && userLevel === 1) {
         return <Redirect to="/favorites" />;
+    }
+
+    if (isAuthenticated && userLevel === 2) {
+        return <Redirect to="/schedule-list" />;
     }
 
     return (
@@ -104,6 +109,7 @@ Login.propTypes = {
 
 const mapStateToProps = (state) => ({
     isAuthenticated: state.auth.isAuthenticated,
+    userLevel: state.auth.userLevel,
 });
 
 const mapDispatchToProps = { login, googleLogin };

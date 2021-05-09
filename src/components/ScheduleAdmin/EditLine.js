@@ -23,11 +23,11 @@ export const EditLine = ({
             transportType: tType,
             lineId: lId,
         });
-    }, []);
+    }, [fPoint, tPoint, tType, lId]);
 
     useEffect(() => {
         getLineScheduleFile(lId);
-    }, []);
+    }, [getLineScheduleFile, lId]);
 
     const [formData, setformData] = useState({
         fromPoint: "",

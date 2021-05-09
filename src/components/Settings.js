@@ -5,6 +5,16 @@ import { updateSettings } from "../actions/user";
 import { setAlert } from "../actions/alert";
 
 const Settings = ({ user, updateSettings, setAlert }) => {
+    const [formData, setformData] = useState({
+        firstName: "",
+        lastName: "",
+        email: "",
+        oldPassword: "",
+        newPassword: "",
+        newPasswordConfirm: "",
+        notifications: false,
+    });
+
     useEffect(() => {
         setformData({
             ...formData,
@@ -24,17 +34,7 @@ const Settings = ({ user, updateSettings, setAlert }) => {
                 notifications: false,
             });
         };
-    }, []);
-
-    const [formData, setformData] = useState({
-        firstName: "",
-        lastName: "",
-        email: "",
-        oldPassword: "",
-        newPassword: "",
-        newPasswordConfirm: "",
-        notifications: false,
-    });
+    }, [user, formData]);
 
     const {
         firstName,
