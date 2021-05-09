@@ -113,6 +113,8 @@ const Map = () => {
                             height: "85vh",
                             width: "100%",
                             borderRadius: "20px",
+                            boxShadow: `1px 2px 9px 7px rgba(0, 0, 0, 0.09)`,
+                            border: ` 4px solid var(--yellow)`,
                         }}
                         options={mapOptions}
                         onClick={(e) => {

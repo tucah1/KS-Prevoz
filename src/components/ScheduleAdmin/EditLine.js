@@ -155,7 +155,6 @@ export const EditLine = ({
                                 name="file"
                                 id="scheduleFile"
                                 accept=".csv"
-                                required
                                 onChange={(e) => {
                                     handleFileUpload(e);
                                 }}

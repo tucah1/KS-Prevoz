@@ -2,12 +2,12 @@ import { useState, useEffect, Fragment } from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import Modal from "@material-ui/core/Modal";
-import { logout } from "../actions/auth";
+import { logout } from "../../actions/auth";
 import { Link } from "react-router-dom";
 
-import Login from "./Authentication/Login";
-import Register from "./Authentication/Register";
-import Settings from "./Settings";
+import Login from "../Authentication/Login";
+import Register from "../Authentication/Register";
+import Settings from "../Settings";
 
 export const Navbar = ({
     isAuthenticated,

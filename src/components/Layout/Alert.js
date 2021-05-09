@@ -2,7 +2,7 @@ import React, { Fragment } from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import AlertMaterialUI from "@material-ui/lab/Alert";
-import { removeAlert } from "../actions/alert";
+import { removeAlert } from "../../actions/alert";
 
 const Alert = ({ alerts, removeAlert }) => {
     return (

@@ -1,9 +1,8 @@
 import React from "react";
-import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
 
-export const Footer = ({ isAuthenticated, logout, userLevel }) => {
+export const Footer = ({ isAuthenticated, userLevel }) => {
     return (
         <>
             <div className="footer-wrapper">
@@ -91,10 +90,6 @@ export const Footer = ({ isAuthenticated, logout, userLevel }) => {
             </div>
         </>
     );
-};
-
-Footer.propTypes = {
-    props: PropTypes,
 };
 
 const mapStateToProps = (state) => ({

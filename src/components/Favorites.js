@@ -4,7 +4,7 @@ import { deleteFavoriteLine, getFavorites } from "../actions/user";
 import { connect } from "react-redux";
 import { loadUser } from "../actions/auth";
 
-import Spinner from "./Spinner";
+import Spinner from "./Layout/Spinner";
 
 const Favorites = ({
     getFavorites,

@@ -9,7 +9,7 @@ const FindRoutes = () => {
                     <div className="background-col"></div>
                     <div className="background-wave"></div>
                 </div>
-                <div className="container mainContainer">
+                <div className="container paddingTop">
                     <div className="main-heading-wrapper">
                         <div className="main-heading-line">
                             <div className="main-heading">Find routes</div>
