@@ -33,6 +33,7 @@ const auth = (state = initialState, action) => {
                 ...state,
                 ...payload,
                 loading: false,
+                userLevel: payload.app_user_access,
                 isAuthenticated: true,
             };
         case REGISTER_FAIL:

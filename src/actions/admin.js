@@ -55,14 +55,11 @@ export const getLineScheduleFile = (id) => async (dispatch) => {
         const config = {
             responseType: "blob",
         };
-        const res = api.get(`/line/schedule/${id}`, config);
+        const res = await api.get(`/line/schedule/${id}`, config);
         const url = window.URL.createObjectURL(new Blob([res.data]));
 
         dispatch({ type: GET_LINE_SCHEDULE_FILE, payload: url });
-        // const blob = await res.data.blob();
-        // const url = window.URL.createObjectURL(blob);
 
-        // dispatch({ type: GET_LINE_SCHEDULE_FILE, payload: url });
         // dispatch({ type: SUCCESS });
     } catch (err) {
         console.log(err);

@@ -163,7 +163,7 @@ export const EditLine = ({
                         <p>
                             {" "}
                             Only .csv file is suported. Click{" "}
-                            <a href="" className="purple">
+                            <a href="#/" className="purple">
                                 <strong>here</strong>
                             </a>{" "}
                             to download sample file.

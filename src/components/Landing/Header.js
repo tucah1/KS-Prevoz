@@ -17,7 +17,7 @@ const Header = () => {
                             Lorem, ipsum dolor sit amet consectetur adipisicing
                             elit. Eligendi saepe consectetur unde aut provident
                         </p>
-                        <a href="#" className="button-emp">
+                        <a href="#/" className="button-emp">
                             Discover more
                         </a>
                     </div>
