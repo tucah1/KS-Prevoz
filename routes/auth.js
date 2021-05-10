@@ -106,7 +106,7 @@ router.post(
 				{ expiresIn: '3h' },
 				(err, token) => {
 					if (err) throw err
-					return res.status(201).json({ token })
+					return res.status(201).json({ token, app_user_access: userData.app_user_access })
 				}
 			)
 		} catch (error) {
@@ -142,7 +142,7 @@ router.post(
 
 			const connection = await getConnection()
 			let result = await connection.query(
-				'SELECT app_user_id, password, register_option FROM app_user WHERE email = ?',
+				'SELECT app_user_id, password, register_option, app_user_access FROM app_user WHERE email = ?',
 				[email]
 			)
 
@@ -184,7 +184,7 @@ router.post(
 				{ expiresIn: '3h' },
 				(err, token) => {
 					if (err) throw err
-					return res.status(201).json({ token })
+					return res.status(201).json({ token, app_user_access: result[0][0].app_user_access })
 				}
 			)
 
@@ -231,7 +231,7 @@ router.post('/google/callback', async (req, res) => {
 
 			jwt.sign(payloadX, process.env.JWT_SECRET, (err, token) => {
 				if (err) throw err
-				return res.status(200).json({ token })
+				return res.status(200).json({ token, app_user_access: result[0][0].app_user_access })
 			})
 		} else {
 			let data = {
@@ -264,7 +264,7 @@ router.post('/google/callback', async (req, res) => {
 
 			jwt.sign(payload, process.env.JWT_SECRET, (err, token) => {
 				if (err) throw err
-				return res.status(200).json({ token })
+				return res.status(200).json({ token, app_user_access: data.app_user_access })
 			})
 		}
 	} catch (error) {
