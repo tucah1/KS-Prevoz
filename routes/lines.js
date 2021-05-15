@@ -265,11 +265,12 @@ router.get('/schedule-json/:line_id', async (req, res) => {
 	try {
 		const connection = await getConnection()
 		let result = await connection.query('SELECT * FROM line WHERE line_id = ?', req.params.line_id)
+		let result2 = await connection.query('SELECT * FROM favorite WHERE line_id = ?', req.params.line_id)
 		connection.release()
 		const {schedule_file, ...lineInfo} = result[0][0]
 
 		let obj = await readFile(schedule_file)
-		return res.json({...obj, ...lineInfo})
+		return res.json({data: obj, ...lineInfo, favorite: result2[0].length > 0 ? true : false})
 	} catch (error) {
 		console.log(error)
 		return res
@@ -370,7 +371,7 @@ router.post('/schedule-json-by-names', [
 	try {
 		const connection = await getConnection()
 		let result = await connection.query('SELECT * FROM line WHERE (LOWER(from_point) = ? AND LOWER(to_point) = ?) OR (LOWER(from_point) = ? AND LOWER(to_point) = ?)', [from_point, to_point, to_point, from_point])
-		connection.release()
+		
 		if (result[0].length === 0) {
 			return res.status(400).json({errors: [
 				{
@@ -380,11 +381,13 @@ router.post('/schedule-json-by-names', [
 			]})
 		}
 
+		let result2 = await connection.query('SELECT * FROM favorite WHERE line_id = ?', result[0][0].line_id)
+		connection.release()
+
 		const {schedule_file, ...lineInfo} = result[0][0]
 
-		console.log(schedule_file)
 		let obj = await readFile(schedule_file)
-		return res.json({...obj, ...lineInfo})
+		return res.json({data: obj, ...lineInfo, favorite: result2[0].length > 0 ? true : false})
 	} catch (error) {
 		console.log(error)
 		return res
