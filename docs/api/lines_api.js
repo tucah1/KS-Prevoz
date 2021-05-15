@@ -88,12 +88,14 @@ const delete_line_return = {
 // @desc        Get schedule for single line in json format
 // @access      Public
 const get_schedule_json_return = {
-	weekday1: [],
-	weekday2: [],
-	saturday1: [],
-	saturday2: [],
-	sunday1: [],
-	sunday2: [],
+	data: {
+		weekday1: [],
+		weekday2: [],
+		saturday1: [],
+		saturday2: [],
+		sunday1: [],
+		sunday2: [],
+	},
 	line_id: "b62f8eb9-9e8e-4222-b106-76918cedb08d",
     from_point: "Ilidža",
     to_point: "Osjek",
@@ -123,12 +125,14 @@ const json_by_names_required = {
 	to_point: ''
 }
 const json_by_names_return = {
-	weekday1: [],
-	weekday2: [],
-	saturday1: [],
-	saturday2: [],
-	sunday1: [],
-	sunday2: [],
+	data: {
+		weekday1: [],
+		weekday2: [],
+		saturday1: [],
+		saturday2: [],
+		sunday1: [],
+		sunday2: [],
+	},
 	line_id: "b62f8eb9-9e8e-4222-b106-76918cedb08d",
     from_point: "Ilidža",
     to_point: "Osjek",
