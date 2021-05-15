@@ -94,4 +94,43 @@ const get_schedule_json_return = {
 	saturday2: [],
 	sunday1: [],
 	sunday2: [],
+	line_id: "b62f8eb9-9e8e-4222-b106-76918cedb08d",
+    from_point: "Ilidža",
+    to_point: "Osjek",
+    transport_type: "Bus"
+}
+
+// ! ###############################################
+// @route       POST api/line/auto-complete
+// @desc        Auto-complete route for search option on the landing page
+// @access      Public
+const auto_complete_required = {
+	from_point: '',
+	to_point: '',
+	active: 0, // 0 -> currently searching for value in "from_point"; 1 -> currently searching for value in "to_point"
+}
+const auto_complete_return = [
+    "Baščaršija",
+    "Hrasnica"
+] // List of names
+
+// ! ###############################################
+// @route       POST api/line/schedule-json-by-names
+// @desc        Get schedule for single line in json format
+// @access      Public
+const json_by_names_required = {
+	from_point: '',
+	to_point: ''
+}
+const json_by_names_return = {
+	weekday1: [],
+	weekday2: [],
+	saturday1: [],
+	saturday2: [],
+	sunday1: [],
+	sunday2: [],
+	line_id: "b62f8eb9-9e8e-4222-b106-76918cedb08d",
+    from_point: "Ilidža",
+    to_point: "Osjek",
+    transport_type: "Bus"
 }

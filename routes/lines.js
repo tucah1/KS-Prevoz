@@ -194,7 +194,9 @@ router.get(
 			item_limit = parseInt(item_limit)
 			t_type = ['all', 'bus', 'minibus', 'tram', 'trolley'].includes(t_type.trim().toLowerCase()) ? t_type.trim().toLowerCase() : 'all'
 			search_text = search_text.trim().toLowerCase()
-			let search_query = 'SELECT line_id, from_point, to_point, transport_type FROM line'
+			let vars = 'line_id, from_point, to_point, transport_type'
+			let orderAndLimit = ' ORDER BY from_point LIMIT ?,?'
+			let search_query = `SELECT ${vars} FROM line`
 			
 			if (search_text !== '_') {
 				let tokens = search_text.split('-')
@@ -207,18 +209,19 @@ router.get(
 			if (t_type !== 'all') {
 				search_query += ` ${search_text !== '_' ? 'AND' : 'WHERE'} LOWER(transport_type) = '${t_type}'`
 			}
-			search_query += ' ORDER BY from_point LIMIT ?,?'
+			search_query += orderAndLimit
 
 			const connection = await getConnection()
+			let countQuery = search_query.replace(vars, 'COUNT(line_id) AS count').replace(orderAndLimit, '')
 			let countRes = await connection.query(
-				'SELECT COUNT(line_id) AS count FROM line'
+				countQuery
 			)
-			let numberOfPages = Math.ceil(countRes[0][0].count / item_limit)
 			let result = await connection.query(
 				search_query,
 				[(page_no - 1) * item_limit, item_limit]
 			)
 			connection.release()
+			let numberOfPages = Math.ceil(countRes[0][0].count / item_limit)
 			return res.json({
 				pages_number: numberOfPages,
 				current_page: page_no,
@@ -261,12 +264,127 @@ router.get('/schedule/:line_id', async (req, res) => {
 router.get('/schedule-json/:line_id', async (req, res) => {
 	try {
 		const connection = await getConnection()
-		let result = await connection.query('SELECT schedule_file FROM line WHERE line_id = ?', req.params.line_id)
+		let result = await connection.query('SELECT * FROM line WHERE line_id = ?', req.params.line_id)
 		connection.release()
-		const {schedule_file} = result[0][0]
+		const {schedule_file, ...lineInfo} = result[0][0]
 
 		let obj = await readFile(schedule_file)
-		return res.json(obj)
+		return res.json({...obj, ...lineInfo})
+	} catch (error) {
+		console.log(error)
+		return res
+			.status(500)
+			.json({ errors: [{ code: 500, message: 'Server error' }] })
+	}
+})
+
+// @route       POST api/line/auto-complete
+// @desc        Auto-complete route for search option on the landing page
+// @access      Public
+router.post('/auto-complete', [
+	body('from_point').exists(),
+	body('to_point').exists(),
+	body('active').exists()
+], async (req, res) => {
+	// Checking for validation errors
+	const errors = validationResult(req)
+	if (!errors.isEmpty()) {
+		return res.status(422).json({
+			errors: errors.array().map((x) => {
+				let { msg, ...new_x } = x
+				new_x['message'] = msg
+				new_x['code'] = 422
+				return new_x
+			}),
+		})
+	}
+	const {from_point, to_point, active} = req.body
+	const active_point = active === 0 ? from_point.toLowerCase() : to_point.toLowerCase()
+	const inactive_point = active === 0 ? to_point.toLowerCase() : from_point.toLowerCase()
+	
+	if (active_point.length < 2) {
+		return res.status(400).json({errors: [
+			{
+				code: 400,
+				message: 'Invalid data for active point!'
+			}
+		]})
+	}
+
+	try {
+		const connection = await getConnection()
+		let result = []
+		let r1 = []
+		let r2 = []
+		if (inactive_point === '') {
+			r1 = await connection.query(`SELECT from_point FROM line WHERE LOWER(from_point) LIKE '%${active_point}%'`)
+			r2 = await connection.query(`SELECT to_point FROM line WHERE LOWER(to_point) LIKE '%${active_point}%'`)
+			
+		} else {
+			r1 = await connection.query(`SELECT from_point, to_point FROM line WHERE LOWER(to_point) = '${inactive_point}' AND LOWER(from_point) LIKE '%${active_point}%'`)
+			r2 = await connection.query(`SELECT to_point, from_point FROM line WHERE LOWER(from_point) = '${inactive_point}' AND LOWER(to_point) LIKE '%${active_point}%'`)
+
+		}
+		r1[0].forEach(x => {
+			if (!result.includes(x.from_point)){
+				result.push(x.from_point)
+			}
+		})
+		r2[0].forEach(x => {
+			if (!result.includes(x.to_point)){
+				result.push(x.to_point)
+			}
+		})
+		connection.release()
+
+		return res.json(result)
+	} catch (error) {
+		console.log(error)
+		return res
+			.status(500)
+			.json({ errors: [{ code: 500, message: 'Server error' }] })
+	}
+})
+
+// @route       POST api/line/schedule-json-by-names
+// @desc        Get schedule for single line in json format
+// @access      Public
+router.post('/schedule-json-by-names', [
+	body('from_point').exists(),
+	body('to_point').exists()
+], async (req, res) => {
+	// Checking for validation errors
+	const errors = validationResult(req)
+	if (!errors.isEmpty()) {
+		return res.status(422).json({
+			errors: errors.array().map((x) => {
+				let { msg, ...new_x } = x
+				new_x['message'] = msg
+				new_x['code'] = 422
+				return new_x
+			}),
+		})
+	}
+	const from_point = req.body.from_point.toLowerCase()
+	const to_point = req.body.to_point.toLowerCase()
+	try {
+		const connection = await getConnection()
+		let result = await connection.query('SELECT * FROM line WHERE (LOWER(from_point) = ? AND LOWER(to_point) = ?) OR (LOWER(from_point) = ? AND LOWER(to_point) = ?)', [from_point, to_point, to_point, from_point])
+		connection.release()
+		if (result[0].length === 0) {
+			return res.status(400).json({errors: [
+				{
+					code: 400,
+					message: 'Line does not exist!'
+				}
+			]})
+		}
+
+		const {schedule_file, ...lineInfo} = result[0][0]
+
+		console.log(schedule_file)
+		let obj = await readFile(schedule_file)
+		return res.json({...obj, ...lineInfo})
 	} catch (error) {
 		console.log(error)
 		return res
