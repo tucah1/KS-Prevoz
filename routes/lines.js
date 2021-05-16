@@ -303,14 +303,15 @@ router.post('/auto-complete', [
 	const active_point = active === 0 ? from_point.toLowerCase() : to_point.toLowerCase()
 	const inactive_point = active === 0 ? to_point.toLowerCase() : from_point.toLowerCase()
 	
-	if (active_point.length < 2) {
-		return res.status(400).json({errors: [
-			{
-				code: 400,
-				message: 'Invalid data for active point!'
-			}
-		]})
-	}
+	// ! Get all possible if active_point is empty str
+	// if (active_point.length < 2) {
+	// 	return res.status(400).json({errors: [
+	// 		{
+	// 			code: 400,
+	// 			message: 'Invalid data for active point!'
+	// 		}
+	// 	]})
+	// }
 
 	try {
 		const connection = await getConnection()
@@ -338,7 +339,7 @@ router.post('/auto-complete', [
 		})
 		connection.release()
 
-		return res.json(result)
+		return res.json(result.slice(0, 4))
 	} catch (error) {
 		console.log(error)
 		return res
