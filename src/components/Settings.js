@@ -34,7 +34,7 @@ const Settings = ({ user, updateSettings, setAlert }) => {
                 notifications: false,
             });
         };
-    }, [user, formData]);
+    }, [user]);
 
     const {
         firstName,

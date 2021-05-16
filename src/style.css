@@ -378,7 +378,7 @@ button:hover {
 
 .heading-quote a {
     font-size: 20px;
-    padding: 10px 15px;
+    padding: 7px 15px;
     letter-spacing: 1px;
     font-weight: 600;
 }
@@ -403,7 +403,7 @@ button:hover {
 
 .fav-item {
     margin: 15px auto;
-    cursor: pointer;
+
     height: 60px;
     max-width: 1000px;
     background: #ffffff;
@@ -425,6 +425,10 @@ button:hover {
     font-size: 20px;
     letter-spacing: 0.04em;
     color: var(--yellow);
+}
+
+.fav-item-left {
+    cursor: pointer;
 }
 
 .fav-item-right {
@@ -518,8 +522,9 @@ button:hover {
     border: 2px solid #fecc53;
     padding: 3px 17px;
     border-radius: 15px;
-    letter-spacing: 0.09em;
+    letter-spacing: 0.1em;
     font-size: 15px;
+    font-weight: 600;
     margin: 10px;
 }
 
@@ -1236,6 +1241,16 @@ textarea:focus {
     min-height: 300px;
 }
 
+.favorite-btn {
+    position: absolute;
+    right: 150px;
+    top: 100px;
+}
+.favorite-btn i {
+    color: var(--yellow);
+    font-size: 30px;
+}
+
 .schedule-search-input {
     background: var(--purpleGradient);
     max-width: 250px;
@@ -1243,7 +1258,7 @@ textarea:focus {
     padding: 7px 20px;
     border: none;
     color: #fff;
-    margin: 10px 20px;
+
     font-weight: 500;
     font-size: 20px;
     letter-spacing: 0.05em;
@@ -1339,15 +1354,44 @@ textarea:focus {
     margin: 10px;
 }
 
+.schedule-message {
+    text-align: center;
+    max-width: 400px;
+    font-size: 23px;
+    font-weight: 600;
+    color: var(--yellow);
+    text-shadow: -2px 2px 4px rgba(0, 0, 0, 0.04);
+}
+
 /* autocomplete */
 
 .search-wrap {
-    margin-bottom: 30px;
     position: relative;
+    margin: 10px 20px;
 }
 
 .results {
     position: absolute;
+    width: 100%;
+    margin-top: 5px;
+    z-index: 200;
+}
+
+.res-item {
+    background: var(--purpleGradient);
+    color: #fff;
+    font-size: 18px;
+    letter-spacing: 0.05em;
+    font-weight: 600;
+    cursor: pointer;
+    border-radius: 20px;
+    margin: 5px auto;
+    width: 90%;
+    padding: 5px 15px;
+}
+
+.res-item:hover {
+    background: var(--purpleDark);
 }
 
 /* ! PAGINATION */

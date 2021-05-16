@@ -143,7 +143,6 @@ export const getNotifications = () => async (dispatch) => {
 
 export const sendNotification = (formData) => async (dispatch) => {
     try {
-        console.log(formData);
         const res = await api.post(`/notifications/sendNotification`, formData);
 
         dispatch(setAlert(res.data.message, "success"));

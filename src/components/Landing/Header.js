@@ -14,11 +14,11 @@ const Header = () => {
                             late again
                         </h1>
                         <p>
-                            Lorem, ipsum dolor sit amet consectetur adipisicing
-                            elit. Eligendi saepe consectetur unde aut provident
+                            Reach all of your favorite destinations in one
+                            place!
                         </p>
-                        <a href="#/" className="button-emp">
-                            Discover more
+                        <a href="/#schedule" className="button-emp">
+                            Try now!
                         </a>
                     </div>
                     <div className="heading-image d-flex justify-content-end">

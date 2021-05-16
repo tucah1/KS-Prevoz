@@ -27,6 +27,7 @@ export const Notifications = ({
     const onSubmit = (e) => {
         e.preventDefault();
         sendNotification({ subject, body: message });
+        setformData({ subject: "", message: "" });
     };
 
     return (
@@ -55,6 +56,7 @@ export const Notifications = ({
                                     name="subject"
                                     value={subject}
                                     required
+                                    autoComplete="off"
                                     onChange={(e) => onChange(e)}
                                     placeholder="Subject"
                                 />

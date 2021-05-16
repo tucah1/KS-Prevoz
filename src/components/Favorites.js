@@ -5,7 +5,9 @@ import { connect } from "react-redux";
 
 import Spinner from "./Layout/Spinner";
 import ScheduleTable from "./Schedule/ScheduleTable";
-import { getLineSchedulById, removeLineSchedule } from "../actions/schedule";
+import { getLineSchedulById } from "../actions/schedule";
+import DeleteForeverIcon from "@material-ui/icons/DeleteForever";
+import ExpandLessIcon from "@material-ui/icons/ExpandLess";
 
 const Favorites = ({
     getFavorites,
@@ -13,7 +15,6 @@ const Favorites = ({
     loading,
     deleteFavoriteLine,
     getLineSchedulById,
-    removeLineSchedule,
 }) => {
     useEffect(() => {
         getFavorites();
@@ -40,21 +41,25 @@ const Favorites = ({
                         <>
                             {favorites.map((fav) => (
                                 <Fragment key={fav.line_id}>
-                                    <div
-                                        className="row"
-                                        onClick={() => {
-                                            if (
-                                                openedSchedule !== fav.line_id
-                                            ) {
-                                                removeLineSchedule();
-                                                setopenedSchedule(fav.line_id);
-                                                getLineSchedulById(fav.line_id);
-                                            }
-                                        }}
-                                    >
+                                    <div className="row">
                                         <div className="col-12">
                                             <div className="fav-item d-flex justify-content-between align-items-center">
-                                                <div className="fav-item-left d-flex flex-row">
+                                                <div
+                                                    className="fav-item-left d-flex flex-row w-100"
+                                                    onClick={() => {
+                                                        if (
+                                                            openedSchedule !==
+                                                            fav.line_id
+                                                        ) {
+                                                            setopenedSchedule(
+                                                                fav.line_id
+                                                            );
+                                                            getLineSchedulById(
+                                                                fav.line_id
+                                                            );
+                                                        }
+                                                    }}
+                                                >
                                                     <p className="fav-line-name">
                                                         {fav.from_point} -{" "}
                                                         {fav.to_point}
@@ -63,16 +68,32 @@ const Favorites = ({
                                                         {fav.transport_type}
                                                     </p>
                                                 </div>
-                                                <button
-                                                    className="fav-item-right"
-                                                    onClick={() => {
-                                                        deleteFavoriteLine(
-                                                            fav.line_id
-                                                        );
-                                                    }}
-                                                >
-                                                    X
-                                                </button>
+                                                {openedSchedule ===
+                                                fav.line_id ? (
+                                                    <button
+                                                        className="fav-item-right"
+                                                        onClick={() => {
+                                                            setopenedSchedule(
+                                                                ""
+                                                            );
+                                                        }}
+                                                    >
+                                                        {/* <i class="fas fa-trash"></i> */}
+                                                        <ExpandLessIcon />
+                                                    </button>
+                                                ) : (
+                                                    <button
+                                                        className="fav-item-right"
+                                                        onClick={() => {
+                                                            deleteFavoriteLine(
+                                                                fav.line_id
+                                                            );
+                                                        }}
+                                                    >
+                                                        {/* <i class="fas fa-trash"></i> */}
+                                                        <DeleteForeverIcon />
+                                                    </button>
+                                                )}
                                             </div>
                                         </div>
                                     </div>
@@ -107,7 +128,6 @@ const mapDispatchToProps = {
     getFavorites,
     deleteFavoriteLine,
     getLineSchedulById,
-    removeLineSchedule,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Favorites);

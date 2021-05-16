@@ -63,7 +63,6 @@ export const getFavorites = () => async (dispatch) => {
 
 export const deleteFavoriteLine = (line_id) => async (dispatch) => {
     try {
-        console.log(line_id);
         const res = await api.delete("/favorites/deleteFavorite", {
             data: { line_id },
         });
@@ -81,5 +80,14 @@ export const deleteFavoriteLine = (line_id) => async (dispatch) => {
         //         dispatch(setAlert(error.message, "error"));
         //     });
         // }
+    }
+};
+
+export const addFavoriteLine = (line_id) => async (dispatch) => {
+    try {
+        const res = await api.post("/favorites/addFavorite", { line_id });
+        dispatch(setAlert(res.data.message, "success"));
+    } catch (err) {
+        console.log(err);
     }
 };
