@@ -2,6 +2,22 @@
     --yellow: #fbbb31;
     --purpleDark: #474784;
     --purpleLight: #7a68cc;
+    --yellowGradient: linear-gradient(
+        87.16deg,
+        #f8ae16 12.77%,
+        #fecf5b 102.42%
+    );
+    --purpleGradient: linear-gradient(
+        95.95deg,
+        #474784 14.28%,
+        #484785 14.29%,
+        #494886 14.3%,
+        #8d74e6 81.28%
+    );
+}
+
+html {
+    scroll-behavior: smooth;
 }
 
 * {
@@ -282,11 +298,11 @@ button:hover {
 .user-options {
     position: absolute;
     background-color: #fff;
-    left: -70px;
-    bottom: -90px;
+    left: -95px;
+    bottom: -100px;
     box-shadow: -4px 4px 9px rgba(0, 0, 0, 0.1);
     border-radius: 10px;
-    padding: 15px 25px;
+    padding: 15px 20px;
 }
 
 .user-options button {
@@ -294,7 +310,12 @@ button:hover {
     font-size: 16px;
     letter-spacing: 0.05em;
     text-align: left;
+
     color: #9b9fa4;
+}
+
+.user-options button:nth-child(2) {
+    margin-top: 10px;
 }
 
 .user-options button:hover {
@@ -382,6 +403,7 @@ button:hover {
 
 .fav-item {
     margin: 15px auto;
+    cursor: pointer;
     height: 60px;
     max-width: 1000px;
     background: #ffffff;
@@ -413,6 +435,28 @@ button:hover {
     transform: translateY(3px);
 }
 
+.schedule-table-main {
+    min-height: 400px;
+}
+
+.schedule-table-favorites {
+    background-color: #fff;
+    max-width: 750px;
+    min-height: 450px;
+    margin: 20px auto;
+    padding: 10px 20px 20px;
+    box-shadow: -5px 4px 13px 4px rgba(0, 0, 0, 0.1);
+    border-radius: 20px;
+}
+
+.table-left {
+    margin-right: 25px;
+}
+
+.table-right {
+    margin-left: 25px;
+}
+
 /*! SCHEDULE LIST */
 
 .sch-item-right {
@@ -435,7 +479,12 @@ button:hover {
     width: 250px;
     height: 50px;
     padding: 10px 20px;
-    margin-bottom: 20px;
+    margin-bottom: 30px;
+    color: var(--purpleLight);
+    font-weight: 600;
+    font-size: 20px;
+    letter-spacing: 0.05em;
+    border: 2px solid #fff;
 }
 
 .search:focus {
@@ -451,6 +500,46 @@ button:hover {
 .break {
     flex-basis: 100%;
     height: 0;
+}
+
+.trantypes-wrapper {
+    margin: 0 10px;
+}
+.radio-button {
+    margin: 10px 0;
+}
+
+.radio-button:hover {
+    cursor: pointer;
+}
+
+.radio-button span {
+    color: #fecc53;
+    border: 2px solid #fecc53;
+    padding: 3px 17px;
+    border-radius: 15px;
+    letter-spacing: 0.09em;
+    font-size: 15px;
+    margin: 10px;
+}
+
+.radio-button input {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+}
+
+.radio-button input[type="radio"]:checked + span {
+    color: #fff;
+    background: var(--yellowGradient);
+    border: 2px solid var(--yellow);
+}
+
+.radio-button input[type="radio"]:disabled + span {
+    color: #9b9fa4;
+    background: transparent;
+    border: 2px solid #9b9fa4;
+    cursor: context-menu;
 }
 
 /* ! LOGIN and REGISTER */
@@ -579,7 +668,7 @@ button:hover {
 
 /* ! SETTINGS */
 
-label {
+.settings label {
     margin: 5px;
     margin-left: 15px;
     display: flex;
@@ -938,7 +1027,7 @@ textarea:focus {
 
 .spinner-small img {
     height: 150px;
-    filter: drop-shadow(1px 3px 1.5rem rgba(80, 79, 79, 0.2));
+    /* filter: drop-shadow(1px 3px 1.5rem rgba(80, 79, 79, 0.2)); */
 }
 
 .spinner img {
@@ -1077,6 +1166,7 @@ textarea:focus {
 .pac-item:hover .pac-item-query,
 .pac-item-selected .pac-item-query,
 .pac-item-selected {
+    cursor: pointer;
     color: #644bbe;
     background-color: #f3f1f1;
 }
@@ -1136,6 +1226,160 @@ textarea:focus {
 
 .adp-list > div:nth-child(2) > ol > li > div:nth-child(3) span:nth-child(2) {
     margin-left: 5px;
+}
+
+/* ! SCHEDULE */
+#schedule {
+    margin-top: 50px;
+}
+.schedule-table-wrapper {
+    min-height: 300px;
+}
+
+.schedule-search-input {
+    background: var(--purpleGradient);
+    max-width: 250px;
+    border-radius: 30px;
+    padding: 7px 20px;
+    border: none;
+    color: #fff;
+    margin: 10px 20px;
+    font-weight: 500;
+    font-size: 20px;
+    letter-spacing: 0.05em;
+    border: 2px solid #fff;
+    height: 45px;
+}
+
+.schedule-search-btn {
+    background: var(--yellowGradient);
+    padding: 5px 13px;
+    color: #fff;
+    font-size: 20px;
+    border-radius: 50%;
+    border: none;
+    margin: 10px 5px;
+    height: 45px;
+    border: 2px solid #fff;
+}
+
+.schedule-search-btn:focus {
+    border: 2px solid var(--purpleLight);
+}
+.schedule-search-input::placeholder {
+    color: #ebe9e9;
+}
+
+.schedule-search-input:focus {
+    outline: none;
+    border: 2px solid var(--yellow);
+}
+
+.scheduletable-days-btns {
+    margin: 20px auto;
+}
+.scheduletable-days-btns label {
+    margin: 10px;
+}
+.schedule-table {
+    /* margin: 0 auto; */
+    max-width: 650px;
+
+    width: 100%;
+}
+
+.grid {
+    display: grid;
+}
+
+.col1 {
+    grid-template-columns: 1fr;
+}
+
+.col2 {
+    grid-template-columns: 1fr 1fr;
+}
+
+.col3 {
+    grid-template-columns: 1fr 1fr 1fr;
+}
+
+.col4 {
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+}
+
+.table-cell {
+    background: rgba(234, 238, 245, 0.5);
+
+    width: 55px;
+    max-width: 55px;
+    height: 35px;
+    border-radius: 8px;
+    color: var(--purpleLight);
+    padding: 2px;
+    font-weight: 600;
+    letter-spacing: 0.025em;
+    margin: 10px;
+    font-size: 18px;
+}
+
+.table-heading {
+    font-weight: bold;
+    font-size: 25px;
+
+    letter-spacing: 0.05em;
+    margin: 15px 0 25px;
+    color: var(--purpleDark);
+}
+.table-transtype {
+    font-weight: 700;
+    font-size: 20px;
+    letter-spacing: 0.05em;
+    color: var(--yellow);
+    margin: 10px;
+}
+
+/* autocomplete */
+
+.search-wrap {
+    margin-bottom: 30px;
+    position: relative;
+}
+
+.results {
+    position: absolute;
+}
+
+/* ! PAGINATION */
+.pagination {
+    margin: 20px 0;
+    justify-content: center;
+}
+
+.pagination-item li button {
+    background: #fff;
+    border-radius: 10px;
+    font-family: Segoe UI;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 20px;
+    text-align: center;
+    letter-spacing: 0.025em;
+    color: #fff;
+    color: var(--yellow);
+    padding: 17px 12px;
+    margin: 0 7px;
+    box-shadow: -4px 5px 18px -4px rgba(0, 0, 0, 0.15);
+}
+
+.pagination-item li button:hover {
+    background: #ebebeb;
+}
+
+button.Mui-selected {
+    color: #fff !important;
+    background: #fff !important;
+    background: var(--yellowGradient) !important;
 }
 
 /* TEMP */

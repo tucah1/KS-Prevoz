@@ -6,6 +6,7 @@ import { getScheduleList, removeScheduleFile } from "../../actions/admin";
 import AddNewLine from "./AddNewLine";
 import EditLine from "./EditLine";
 import Modal from "@material-ui/core/Modal";
+import { Pagination } from "@material-ui/lab";
 
 export const ScheduleList = ({
     loading,
@@ -13,10 +14,11 @@ export const ScheduleList = ({
     linesList,
     removeScheduleFile,
     lineScheduleFile,
+    linesListPagesConfig: { pagesNumber, currentPage },
 }) => {
     useEffect(() => {
         setmodalAddnewLine(false);
-        getScheduleList();
+        getScheduleList(currentPage, transTypeChecked, "_");
     }, [getScheduleList]);
 
     //add new line
@@ -41,6 +43,50 @@ export const ScheduleList = ({
         transType: "",
     });
 
+    //pagination
+    const onPageChange = (page) => {
+        if (page !== currentPage) {
+            if (searchQuery === "") {
+                getScheduleList(page, transTypeChecked, "_");
+            } else {
+                getScheduleList(page, transTypeChecked, searchQuery);
+            }
+        }
+    };
+
+    //search
+    const [searchQuery, setsearchQuery] = useState("");
+
+    const onChnageSearchQuery = (e) => {
+        if (e.target.value === "") {
+            getScheduleList(1, transTypeChecked, "_");
+        } else {
+            getScheduleList(1, transTypeChecked, e.target.value);
+        }
+
+        setsearchQuery(e.target.value);
+    };
+
+    const [transTypeArray] = useState([
+        "All",
+        "Bus",
+        "Tram",
+        "Trolley",
+        "Minibus",
+    ]);
+
+    const [transTypeChecked, settransTypeChecked] = useState("All");
+
+    const onChangeTransType = (e) => {
+        if (searchQuery === "") {
+            getScheduleList(1, e.target.name.toLowerCase(), "_");
+        } else {
+            getScheduleList(1, e.target.name.toLowerCase(), searchQuery);
+        }
+
+        settransTypeChecked(e.target.name);
+    };
+
     return (
         <>
             <>
@@ -60,13 +106,45 @@ export const ScheduleList = ({
                         <div className="row mt-4">
                             <div className="col-12">
                                 <div className="sch-srch d-flex justify-content-between align-items-center">
-                                    <div>
+                                    <div className="d-flex flex-column">
                                         <input
                                             type="text"
-                                            name=""
+                                            name="searchQuery"
                                             className="search"
                                             placeholder="Search..."
+                                            spellCheck={false}
+                                            value={searchQuery}
+                                            onChange={(e) => {
+                                                onChnageSearchQuery(e);
+                                            }}
                                         />
+                                        <div className="trantypes-wrapper">
+                                            {transTypeArray.map(
+                                                (type, index) => (
+                                                    <label
+                                                        htmlFor={type}
+                                                        className="radio-button"
+                                                        key={index}
+                                                    >
+                                                        <input
+                                                            type="radio"
+                                                            name={type}
+                                                            id={type}
+                                                            checked={
+                                                                transTypeChecked ===
+                                                                type
+                                                            }
+                                                            onChange={(e) => {
+                                                                onChangeTransType(
+                                                                    e
+                                                                );
+                                                            }}
+                                                        />
+                                                        <span>{type}</span>
+                                                    </label>
+                                                )
+                                            )}
+                                        </div>
                                     </div>
 
                                     <div>
@@ -106,8 +184,7 @@ export const ScheduleList = ({
                                                                     line.to_point,
                                                                 fromPoint:
                                                                     line.from_point,
-                                                                lineId:
-                                                                    line.line_id,
+                                                                lineId: line.line_id,
                                                                 transType:
                                                                     line.transport_type,
                                                             });
@@ -121,6 +198,19 @@ export const ScheduleList = ({
                                                 </div>
                                             </Fragment>
                                         ))}
+
+                                        <Pagination
+                                            count={pagesNumber}
+                                            page={currentPage}
+                                            classes={{
+                                                root: "pagination",
+                                                ul: "pagination-item",
+                                            }}
+                                            onChange={(e, page) => {
+                                                onPageChange(page);
+                                            }}
+                                            color="primary"
+                                        />
                                     </>
                                 )}
                             </div>
@@ -170,6 +260,7 @@ const mapStateToProps = (state) => ({
     loading: state.loading.loading,
     linesList: state.admin.linesList,
     lineScheduleFile: state.admin.lineScheduleFile,
+    linesListPagesConfig: state.admin.linesListPagesConfig,
 });
 
 const mapDispatchToProps = { getScheduleList, removeScheduleFile };

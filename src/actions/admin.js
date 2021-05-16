@@ -10,11 +10,10 @@ import {
     SUCCESS,
 } from "./types";
 
-export const getScheduleList = () => async (dispatch) => {
+export const getScheduleList = (page, type, query) => async (dispatch) => {
     try {
         dispatch({ type: REQUEST });
-
-        const res = await api.get(`/line/lines/${1}/${100}`);
+        const res = await api.get(`/line/lines/${page}/${10}/${query}/${type}`);
 
         dispatch({ type: GET_SCHEDULE_LIST, payload: res.data });
 
@@ -28,9 +27,8 @@ export const getScheduleList = () => async (dispatch) => {
 export const addNewLine = (formData) => async (dispatch) => {
     try {
         // dispatch({ type: REQUEST });
-        console.log(formData);
         const res = await api.post(`/line/add-line`, formData);
-        dispatch(getScheduleList());
+        dispatch(getScheduleList(1, "all", "_"));
         dispatch(setAlert(res.data.message, "success"));
     } catch (err) {
         console.log(err.response);
@@ -79,7 +77,7 @@ export const editLine = (formData) => async (dispatch) => {
     try {
         const res = await api.post(`/line/edit-line`, formData);
 
-        dispatch(getScheduleList());
+        dispatch(getScheduleList(1, "all", "_"));
         dispatch(setAlert(res.data.message, "success"));
     } catch (err) {
         console.log(err.response);
@@ -101,7 +99,7 @@ export const editLine = (formData) => async (dispatch) => {
 export const deleteLine = (id) => async (dispatch) => {
     try {
         const res = await api.delete(`/line/delete-line/${id}`);
-        dispatch(getScheduleList());
+        dispatch(getScheduleList(1, "all", "_"));
         dispatch(setAlert(res.data.message, "success"));
     } catch (err) {
         console.log(err.response);
