@@ -9,6 +9,10 @@ import {
 
 const initialState = {
     linesList: [],
+    linesListPagesConfig: {
+        pagesNumber: null,
+        currentPage: 1,
+    },
     lineScheduleFile: null,
     notifications: [],
 };
@@ -19,7 +23,11 @@ const admin = (state = initialState, action) => {
         case GET_SCHEDULE_LIST:
             return {
                 ...state,
-                linesList: payload,
+                linesList: payload.data,
+                linesListPagesConfig: {
+                    pagesNumber: payload.pages_number,
+                    currentPage: payload.current_page,
+                },
             };
         case GET_LINE_SCHEDULE_FILE:
             return {

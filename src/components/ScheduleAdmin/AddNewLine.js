@@ -71,6 +71,7 @@ export const AddNewLine = ({ addNewLine }) => {
             transportType: "",
             file: "",
         });
+        setfileBtnName("");
         document.getElementById("scheduleFile").value = "";
     };
 

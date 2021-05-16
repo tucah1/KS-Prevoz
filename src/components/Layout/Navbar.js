@@ -9,6 +9,10 @@ import Login from "../Authentication/Login";
 import Register from "../Authentication/Register";
 import Settings from "../Settings";
 
+// icons
+import SettingsIcon from "@material-ui/icons/Settings";
+import ExitToAppIcon from "@material-ui/icons/ExitToApp";
+
 export const Navbar = ({
     isAuthenticated,
     logout,
@@ -138,13 +142,13 @@ export const Navbar = ({
                                 </>
                             ) : (
                                 <>
-                                    <Link
-                                        to="/#schedule"
+                                    <a
+                                        href="/#schedule"
                                         className="navbar-link"
                                     >
                                         {" "}
                                         SCHEDULES{" "}
-                                    </Link>
+                                    </a>
                                 </>
                             )}
                         </li>
@@ -216,7 +220,7 @@ export const Navbar = ({
                                                         setuserOptions(false);
                                                     }}
                                                 >
-                                                    Settings
+                                                    <SettingsIcon /> Settings
                                                 </button>
                                                 <button
                                                     onMouseDown={(e) => {
@@ -227,7 +231,7 @@ export const Navbar = ({
                                                         setuserOptions(false);
                                                     }}
                                                 >
-                                                    Logout
+                                                    <ExitToAppIcon /> Logout
                                                 </button>
                                             </div>
                                         </>

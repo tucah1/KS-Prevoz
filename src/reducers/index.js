@@ -4,6 +4,7 @@ import user from "./user.js";
 import loading from "./loading";
 import alert from "./alert";
 import admin from "./admin";
+import schedule from "./schedule";
 
 export default combineReducers({
     auth,
@@ -11,4 +12,5 @@ export default combineReducers({
     user,
     loading,
     admin,
+    schedule,
 });
