@@ -114,6 +114,7 @@ export const ScheduleList = ({
                                             placeholder="Search..."
                                             spellCheck={false}
                                             value={searchQuery}
+                                            autoComplete="off"
                                             onChange={(e) => {
                                                 onChnageSearchQuery(e);
                                             }}

@@ -4,6 +4,7 @@ import {
     GET_LINE_SCHEDULE_FAILURE,
     GET_LINE_SCHEDULE_REQUEST,
     GET_LINE_SCHEDULE_SUCCESS,
+    REMOVE_AUTOCOMPLETE_RESULTS,
     REMOVE_LINE_SCHEDULE,
 } from "../actions/types";
 
@@ -43,6 +44,7 @@ const schedule = (state = initialState, action) => {
                 results: [],
             };
         case GET_AUTOCOMPLETE_RESULTS_FAILURE:
+        case REMOVE_AUTOCOMPLETE_RESULTS:
             return {
                 ...state,
                 results: [],

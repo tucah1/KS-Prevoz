@@ -5,26 +5,35 @@ import Spinner from "../Layout/Spinner";
 import WeekDayButton from "./WeekdayButton";
 import { removeLineSchedule } from "../../actions/schedule";
 import { Pagination } from "@material-ui/lab";
+import { addFavoriteLine, deleteFavoriteLine } from "../../actions/user";
 
 export const ScheduleTable = ({
     schedule,
     loading,
     removeLineSchedule,
+    addFavoriteLine,
+    deleteFavoriteLine,
+    userLevel,
     lineInfo: { from_point, to_point, favorite, line_id, transport_type },
+    showFavorite,
 }) => {
     useEffect(() => {
         if (schedule.weekday1) {
-            // setdisplayedData({
-            //     from: schedule.weekday1,
-            //     to: schedule.weekday2,
-            // });
             calculateColumns(schedule.weekday1.length);
             paginationConfig(schedule.weekday1, schedule.weekday2, 1);
         }
-        // return () => {
-        //     removeLineSchedule();
-        // };
+        setisFavorite(favorite);
     }, [schedule]);
+
+    //cleanup useEffect
+    useEffect(() => {
+        return () => {
+            removeLineSchedule();
+        };
+    }, []);
+
+    //isLine Favorite
+    const [isFavorite, setisFavorite] = useState(false);
 
     const [displayedData, setdisplayedData] = useState({
         from: [],
@@ -95,6 +104,7 @@ export const ScheduleTable = ({
                 from: fromArr,
                 to: toArr,
             });
+            setpagesConfig({ totalPages: 1, currentPage: 1 });
         }
     };
 
@@ -113,7 +123,9 @@ export const ScheduleTable = ({
                 <Spinner small={true} />
             ) : (
                 <>
-                    {from.length !== 0 && to.length !== 0 && schedule.weekday1 && (
+                    {from.length !== 0 &&
+                    to.length !== 0 &&
+                    schedule.weekday1 ? (
                         <>
                             <div className="scheduletable-days-btns d-flex justify-content-center align-items-center flex-wrap">
                                 <WeekDayButton
@@ -147,6 +159,32 @@ export const ScheduleTable = ({
                                     isChecked={selectedDay === "sunday"}
                                 />
                             </div>
+                            {userLevel === 1 && showFavorite && (
+                                <div className="favorite-btn">
+                                    {isFavorite ? (
+                                        <button
+                                            onClick={() => {
+                                                deleteFavoriteLine(line_id);
+                                                setisFavorite(false);
+                                            }}
+                                        >
+                                            {" "}
+                                            <i className="fas fa-star"></i>
+                                        </button>
+                                    ) : (
+                                        <button
+                                            onClick={() => {
+                                                addFavoriteLine(line_id);
+                                                setisFavorite(true);
+                                            }}
+                                        >
+                                            {" "}
+                                            <i className="far fa-star"></i>
+                                        </button>
+                                    )}
+                                </div>
+                            )}
+
                             <div className="d-flex justify-content-center">
                                 <h4 className="table-transtype">
                                     {transport_type}{" "}
@@ -206,6 +244,17 @@ export const ScheduleTable = ({
                                 )}
                             </div>
                         </>
+                    ) : (
+                        <>
+                            {!showFavorite ? (
+                                <Spinner small={true} />
+                            ) : (
+                                <div className="schedule-message">
+                                    Search for your starting point and
+                                    destination!
+                                </div>
+                            )}
+                        </>
                     )}
                 </>
             )}
@@ -213,15 +262,19 @@ export const ScheduleTable = ({
     );
 };
 
-ScheduleTable.propTypes = {};
+ScheduleTable.propTypes = { removeLineSchedule: PropTypes.func.isRequired };
 
 const mapStateToProps = (state) => ({
     loading: state.schedule.loadingSchedule,
     schedule: state.schedule.schedule,
     lineInfo: state.schedule.lineInfo,
-    removeLineSchedule: PropTypes.func.isRequired,
+    userLevel: state.auth.userLevel,
 });
 
-const mapDispatchToProps = { removeLineSchedule };
+const mapDispatchToProps = {
+    removeLineSchedule,
+    addFavoriteLine,
+    deleteFavoriteLine,
+};
 
 export default connect(mapStateToProps, mapDispatchToProps)(ScheduleTable);

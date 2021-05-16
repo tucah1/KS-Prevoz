@@ -21,35 +21,28 @@ export const About = () => {
                     <div className="row no-gutters about-main">
                         <div className="about ">
                             <p>
-                                Lorem ipsum dolor sit amet consectetur
-                                adipisicing elit. Eligendi quam delectus
-                                quisquam temporibus cupiditate. Harum soluta
-                                explicabo eveniet voluptatibus ex, impedit
-                                dolorum magni libero minima neque voluptatum
-                                exercitationem dignissimos, saepe fugiat natus!
-                                Possimus corrupti temporibus amet quae alias ab
-                                aliquid vero sed reiciendis dolorum tempore
-                                voluptas obcaecati nesciunt consequuntur
-                                quaerat, labore molestias deserunt quos et
-                                laborum enim blanditiis incidunt dicta
-                                voluptatem! Nesciunt reiciendis at officiis
-                                repellendus sunt blandi in!
+                                This web application is a project done for CS308
+                                Software Engineering class, Spring 2021. It was
+                                done by Group 9 which consists of four members:
+                                Muhammed Mušanović, Harun Tucaković, Fejsal
+                                Perva and Šejla Burnić.
                             </p>
                             <p>
-                                Possimus corrupti temporibus amet quae alias ab
-                                aliquid vero sed reiciendis dolorum tempore
-                                voluptas obcaecati nesciunt consequuntur
-                                quaerat, labore molestias deserunt quos et
-                                laborum enim blanditiis incidunt dicta
-                                voluptatem! Nesc in!
+                                The reason for doing this project is because we
+                                have found that information about public
+                                transport lines is difficult to obtain and often
+                                incorrect. This application is meant to solve
+                                that problem by not only making search for lines
+                                easier for users of public transport but also
+                                for the administration of public transport
+                                companies by imposing a standard input format
+                                for lines.
                             </p>
                             <p>
-                                Possimus corrupti temporibus amet quae alias ab
-                                aliquid vero sed reiciendis dolorum tempore
-                                voluptas obcaecati nesciunt consequuntur
-                                quaerat, labore molestias deserunt quos et
-                                laborum enim blanditiis incidunt dicta
-                                voluptatem! Nesc in!
+                                The web application was done in JavaScript. The
+                                frontend was implemented using React.js (with
+                                Redux as state manager) while the backend was
+                                done using Node.js, Express, and mySQL.
                             </p>
                         </div>
                         <div className="about-img  d-flex flex-column justify-content-center ">

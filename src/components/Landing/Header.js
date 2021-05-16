@@ -5,7 +5,10 @@ const Header = () => {
     return (
         <>
             <div className="header">
-                <div className="bottom-wave"></div>
+                <div className="background-wrapper">
+                    <div className="background-col"></div>
+                    <div className="background-wave"></div>
+                </div>
 
                 <div className="container-fluid header-landing d-flex flex-row justify-content-between align-items-center">
                     <div className="heading-quote">
@@ -14,11 +17,11 @@ const Header = () => {
                             late again
                         </h1>
                         <p>
-                            Lorem, ipsum dolor sit amet consectetur adipisicing
-                            elit. Eligendi saepe consectetur unde aut provident
+                            Reach all of your favorite destinations in one
+                            place!
                         </p>
-                        <a href="#/" className="button-emp">
-                            Discover more
+                        <a href="/#schedule" className="button-emp">
+                            Try now!
                         </a>
                     </div>
                     <div className="heading-image d-flex justify-content-end">

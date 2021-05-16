@@ -90,8 +90,8 @@ export const Login = ({
                             />
                         </div>
                         <p className="login-text">
-                            don’t have account?{" "}
-                            <button onClick={handleAuthType}>sign up</button>
+                            Don’t have an account?{" "}
+                            <button onClick={handleAuthType}>Sign up</button>
                         </p>
                     </form>
                 </div>

@@ -4,19 +4,29 @@ import { connect } from "react-redux";
 import {
     getAutocompleteResults,
     getLineSchedulById,
+    getLineSchedulByNames,
+    removeAutocompleteResults,
 } from "../../actions/schedule";
 import ScheduleTable from "./ScheduleTable";
 import { useState } from "react";
 import AutocompleteResults from "./AutocompleteResults";
 
 export const Schedule = ({
-    getLineSchedulById,
+    getLineSchedulByNames,
     getAutocompleteResults,
+    removeAutocompleteResults,
     results,
 }) => {
+    //cleanup useEffect
     useEffect(() => {
-        // getLineSchedulById("77d7683c-cc51-402d-b343-941548f3ce03");
-        // getLineSchedulById("84bb2ff4-f056-4515-962e-8c0e649c924a");
+        return () => {
+            setisSelected({
+                from_point: false,
+                to_point: false,
+            });
+            setformData({ from_point: "", to_point: "" });
+            setactiveInput(2);
+        };
     }, []);
 
     //indicate which input field is currently active (focused)
@@ -29,20 +39,72 @@ export const Schedule = ({
 
     const onInputChange = (e) => {
         setformData({ ...formData, [e.target.name]: e.target.value });
-        if (e.target.value.length > 1) {
+        if (e.target.value === "" || isSelected[e.target.name]) {
+            setisSelected({ ...isSelected, [e.target.name]: false });
+        }
+        if (
+            e.target.value.length > 0 ||
+            isSelected.to_point ||
+            isSelected.from_point
+        ) {
             getAutocompleteResults({
                 ...formData,
                 [e.target.name]: e.target.value,
                 active: activeInput,
             });
+        } else {
+            // removeAutocompleteResults();
+            setisSelected({ ...isSelected, [e.target.name]: false });
         }
     };
+
+    const resetAutocomplete = (e, input) => {
+        if (isSelected.from_point || isSelected.to_point) {
+            getAutocompleteResults({
+                ...formData,
+                [e.target.name]: e.target.value,
+                active: input,
+            });
+        }
+        // } else {
+        //     removeAutocompleteResults();
+        // }
+    };
+
+    const onSubmit = (e) => {
+        e.preventDefault();
+        setactiveInput(2);
+        getLineSchedulByNames(formData);
+    };
+
+    const onResultItemClick = (point, val) => {
+        setformData({ ...formData, [point]: val });
+        setisSelected({ ...isSelected, [point]: true });
+        setactiveInput(2);
+    };
+
+    //check when both points are selected from results list
+    const [isSelected, setisSelected] = useState({
+        from_point: false,
+        to_point: false,
+    });
+
+    useEffect(() => {
+        if (isSelected.from_point && isSelected.to_point) {
+            getLineSchedulByNames(formData);
+        }
+    }, [isSelected]);
 
     return (
         <>
             <div className="container" id="schedule">
                 <div className="schedule-search">
-                    <form className="d-flex flex-wrap justify-content-center">
+                    <form
+                        className="d-flex flex-wrap justify-content-center"
+                        onSubmit={(e) => {
+                            onSubmit(e);
+                        }}
+                    >
                         <div className="search-wrap">
                             <input
                                 type="text"
@@ -50,21 +112,32 @@ export const Schedule = ({
                                 className="schedule-search-input"
                                 placeholder="Starting point"
                                 autoComplete="off"
+                                spellCheck={false}
                                 value={from_point}
+                                minLength={2}
                                 onChange={(e) => {
                                     onInputChange(e);
                                 }}
-                                onFocus={() => {
+                                onFocus={(e) => {
                                     setactiveInput(0);
+                                    resetAutocomplete(e, 0);
                                 }}
                                 onBlur={() => {
-                                    setactiveInput(2);
+                                    setTimeout(() => {
+                                        setactiveInput(2);
+                                    }, 150);
                                 }}
                                 required
                             />
-                            {activeInput === 0 && results && (
-                                <AutocompleteResults results={results} />
-                            )}
+                            {!isSelected.from_point &&
+                                activeInput === 0 &&
+                                results && (
+                                    <AutocompleteResults
+                                        results={results}
+                                        point="from_point"
+                                        onClickFunc={onResultItemClick}
+                                    />
+                                )}
                         </div>
 
                         <button className="schedule-search-btn">
@@ -77,26 +150,37 @@ export const Schedule = ({
                                 className="schedule-search-input"
                                 placeholder="Destination"
                                 autoComplete="off"
+                                spellCheck={false}
+                                minLength={2}
                                 value={to_point}
                                 onChange={(e) => {
                                     onInputChange(e);
                                 }}
-                                onFocus={() => {
+                                onFocus={(e) => {
                                     setactiveInput(1);
+                                    resetAutocomplete(e, 1);
                                 }}
                                 onBlur={() => {
-                                    setactiveInput(2);
+                                    setTimeout(() => {
+                                        setactiveInput(2);
+                                    }, 150);
                                 }}
                                 required
                             />
-                            {activeInput === 1 && results && (
-                                <AutocompleteResults results={results} />
-                            )}
+                            {!isSelected.to_point &&
+                                activeInput === 1 &&
+                                results && (
+                                    <AutocompleteResults
+                                        results={results}
+                                        point="to_point"
+                                        onClickFunc={onResultItemClick}
+                                    />
+                                )}
                         </div>
                     </form>
                 </div>
-                <div className="schedule-table-wrapper d-flex justify-content-center align-items-center flex-column">
-                    <ScheduleTable />
+                <div className="schedule-table-wrapper position-relative d-flex justify-content-center align-items-center flex-column">
+                    <ScheduleTable showFavorite={true} />
                 </div>
             </div>
         </>
@@ -112,8 +196,9 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = {
-    getLineSchedulById,
+    getLineSchedulByNames,
     getAutocompleteResults,
+    removeAutocompleteResults,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Schedule);

@@ -7,7 +7,7 @@ export const Footer = ({ isAuthenticated, userLevel }) => {
         <>
             <div className="footer-wrapper">
                 <div className="footer-wave"></div>
-                <div className="footer d-flex  justify-content-around">
+                <div className="footer d-flex flex-wrap justify-content-around">
                     <div className="d-flex align-items-center">
                         <Link className="navbar-brand" to="/">
                             <span>KS</span> Prevoz
