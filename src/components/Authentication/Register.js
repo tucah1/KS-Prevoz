@@ -131,7 +131,7 @@ export const Register = ({
                             />
                         </div>
                         <p className="login-text">
-                            Already have an account?
+                            Already have an account?{" "}
                             <button onClick={handleAuthType}>Sign in</button>
                         </p>
                     </form>

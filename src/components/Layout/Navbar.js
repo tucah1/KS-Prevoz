@@ -101,7 +101,13 @@ export const Navbar = ({
 
     return (
         <>
-            <nav className="navbar navbar-expand-lg">
+            <nav
+                className={
+                    !displayNav
+                        ? "navbar navbar-expand-lg"
+                        : "navbar navbar-expand-lg nav-exp"
+                }
+            >
                 <Link className="navbar-brand" to="/">
                     <span>KS</span> Prevoz
                 </Link>
@@ -135,6 +141,9 @@ export const Navbar = ({
                                     <Link
                                         to="/schedule-list"
                                         className="navbar-link"
+                                        onClick={() => {
+                                            setdisplayNav(false);
+                                        }}
                                     >
                                         {" "}
                                         SCHEDULES{" "}
@@ -145,6 +154,9 @@ export const Navbar = ({
                                     <a
                                         href="/#schedule"
                                         className="navbar-link"
+                                        onClick={() => {
+                                            setdisplayNav(false);
+                                        }}
                                     >
                                         {" "}
                                         SCHEDULES{" "}
@@ -153,7 +165,13 @@ export const Navbar = ({
                             )}
                         </li>
                         <li className="nav-item">
-                            <Link to="/find-routes" className="navbar-link">
+                            <Link
+                                to="/find-routes"
+                                className="navbar-link"
+                                onClick={() => {
+                                    setdisplayNav(false);
+                                }}
+                            >
                                 FIND ROUTES
                             </Link>
                         </li>
@@ -163,6 +181,9 @@ export const Navbar = ({
                                     <Link
                                         to="/favorites"
                                         className="navbar-link"
+                                        onClick={() => {
+                                            setdisplayNav(false);
+                                        }}
                                     >
                                         {" "}
                                         FAVORITES{" "}
@@ -176,6 +197,9 @@ export const Navbar = ({
                                     <Link
                                         to="/notifications"
                                         className="navbar-link"
+                                        onClick={() => {
+                                            setdisplayNav(false);
+                                        }}
                                     >
                                         {" "}
                                         NOTIFICATIONS{" "}
@@ -184,7 +208,13 @@ export const Navbar = ({
                             </>
                         ) : null}
                         <li className="nav-item">
-                            <Link to="/about" className="navbar-link">
+                            <Link
+                                to="/about"
+                                className="navbar-link"
+                                onClick={() => {
+                                    setdisplayNav(false);
+                                }}
+                            >
                                 {" "}
                                 ABOUT{" "}
                             </Link>
@@ -218,6 +248,7 @@ export const Navbar = ({
                                                     onClick={() => {
                                                         setmodalSettings(true);
                                                         setuserOptions(false);
+                                                        setdisplayNav(false);
                                                     }}
                                                 >
                                                     <SettingsIcon /> Settings
@@ -229,9 +260,10 @@ export const Navbar = ({
                                                     onClick={() => {
                                                         logout();
                                                         setuserOptions(false);
+                                                        setdisplayNav(false);
                                                     }}
                                                 >
-                                                    <ExitToAppIcon /> Logout
+                                                    <ExitToAppIcon /> Log out
                                                 </button>
                                             </div>
                                         </>
@@ -247,6 +279,7 @@ export const Navbar = ({
                                         onClick={() => {
                                             setmodalSigninup(true);
                                             setauthType(true);
+                                            setdisplayNav(false);
                                         }}
                                     >
                                         {" "}
@@ -260,6 +293,7 @@ export const Navbar = ({
                                         onClick={() => {
                                             setmodalSigninup(true);
                                             setauthType(false);
+                                            setdisplayNav(false);
                                         }}
                                     >
                                         Sign up

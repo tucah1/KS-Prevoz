@@ -163,55 +163,77 @@ export const ScheduleList = ({
                                     <Spinner small={true} />
                                 ) : (
                                     <>
-                                        {linesList.map((line) => (
-                                            <Fragment key={line.line_id}>
-                                                <div className="fav-item d-flex justify-content-between align-items-center">
-                                                    <div className="fav-item-left d-flex flex-row">
-                                                        <p className="fav-line-name">
-                                                            {line.from_point} -{" "}
-                                                            {line.to_point}
-                                                        </p>
-                                                        <p className="fav-line-type">
-                                                            {
-                                                                line.transport_type
-                                                            }
-                                                        </p>
-                                                    </div>
-                                                    <button
-                                                        className="sch-item-right"
-                                                        onClick={() => {
-                                                            seteditlineData({
-                                                                toPoint:
-                                                                    line.to_point,
-                                                                fromPoint:
-                                                                    line.from_point,
-                                                                lineId: line.line_id,
-                                                                transType:
-                                                                    line.transport_type,
-                                                            });
-                                                            setmodalEditLine(
-                                                                true
-                                                            );
-                                                        }}
+                                        {linesList.length !== 0 ? (
+                                            <>
+                                                {linesList.map((line) => (
+                                                    <Fragment
+                                                        key={line.line_id}
                                                     >
-                                                        <i className="fas fa-sliders-h"></i>
-                                                    </button>
-                                                </div>
-                                            </Fragment>
-                                        ))}
+                                                        <div className="fav-item d-flex justify-content-between align-items-center">
+                                                            <div className="fav-item-left d-flex flex-row">
+                                                                <p className="fav-line-name">
+                                                                    {
+                                                                        line.from_point
+                                                                    }{" "}
+                                                                    -{" "}
+                                                                    {
+                                                                        line.to_point
+                                                                    }
+                                                                </p>
+                                                                <p className="fav-line-type d-flex align-items-center ">
+                                                                    {
+                                                                        line.transport_type
+                                                                    }
+                                                                </p>
+                                                            </div>
+                                                            <button
+                                                                className="sch-item-right"
+                                                                onClick={() => {
+                                                                    seteditlineData(
+                                                                        {
+                                                                            toPoint:
+                                                                                line.to_point,
+                                                                            fromPoint:
+                                                                                line.from_point,
+                                                                            lineId: line.line_id,
+                                                                            transType:
+                                                                                line.transport_type,
+                                                                        }
+                                                                    );
+                                                                    setmodalEditLine(
+                                                                        true
+                                                                    );
+                                                                }}
+                                                            >
+                                                                <i className="fas fa-cogs"></i>
+                                                            </button>
+                                                        </div>
+                                                    </Fragment>
+                                                ))}
 
-                                        <Pagination
-                                            count={pagesNumber}
-                                            page={currentPage}
-                                            classes={{
-                                                root: "pagination",
-                                                ul: "pagination-item",
-                                            }}
-                                            onChange={(e, page) => {
-                                                onPageChange(page);
-                                            }}
-                                            color="primary"
-                                        />
+                                                <Pagination
+                                                    count={pagesNumber}
+                                                    page={currentPage}
+                                                    classes={{
+                                                        root: "pagination",
+                                                        ul: "pagination-item",
+                                                    }}
+                                                    onChange={(e, page) => {
+                                                        onPageChange(page);
+                                                    }}
+                                                    color="primary"
+                                                />
+                                            </>
+                                        ) : (
+                                            <>
+                                                <div className="favorites-message schedulelist-message">
+                                                    <p>
+                                                        There are no lines that
+                                                        match search parameters.
+                                                    </p>
+                                                </div>
+                                            </>
+                                        )}
                                     </>
                                 )}
                             </div>

@@ -238,11 +238,10 @@ button:hover {
 }
 
 .navbar-toggler {
-    color: #fff;
+    color: var(--yellow);
 }
 
 .navbar-toggler:hover {
-    color: var(--yellow);
     cursor: pointer;
 }
 
@@ -469,7 +468,7 @@ button:hover {
 
 .sch-item-right {
     color: var(--purpleLight);
-    font-size: 25px;
+    font-size: 22px;
     font-weight: 500;
 }
 
@@ -549,6 +548,9 @@ button:hover {
     background: transparent;
     border: 2px solid #9b9fa4;
     cursor: context-menu;
+}
+.schedulelist-message {
+    margin: 10px 30px;
 }
 
 /* ! LOGIN and REGISTER */
@@ -1392,6 +1394,7 @@ textarea:focus {
     margin: 5px auto;
     width: 90%;
     padding: 5px 15px;
+    box-shadow: -4px 5px 18px -4px rgba(0, 0, 0, 0.15);
 }
 
 .res-item:hover {
@@ -1458,7 +1461,8 @@ button.Mui-selected {
 
 @media screen and (max-width: 991px) {
     .navbar {
-        padding-top: 25px;
+        height: 55px;
+        padding: 15px 8% 10px;
     }
 
     .heading-quote h1 {
@@ -1474,6 +1478,14 @@ button.Mui-selected {
 
     .favorite-btn {
         right: 40px;
+    }
+
+    .nav-exp {
+        height: 270px;
+    }
+
+    .user-options {
+        left: 0;
     }
 }
 
@@ -1511,11 +1523,26 @@ button.Mui-selected {
     .table-right {
         margin: 0;
     }
+
+    .login {
+        padding: 35px 25px;
+    }
+    .login-buttons button {
+        margin: 0 5px;
+    }
+
+    .add-line {
+        padding: 20px 20px 10px;
+    }
+
+    .delete-line {
+        padding: 20px 15px 10px;
+    }
 }
 
 @media screen and (max-width: 576px) {
     .heading-quote h1 {
-        font-size: 50px;
+        font-size: 60px;
     }
 
     .heading-quote p {
@@ -1527,6 +1554,7 @@ button.Mui-selected {
 
     .fav-line-name {
         margin-right: 10px;
+        font-size: 18px;
     }
 
     .fav-line-type {
@@ -1534,5 +1562,9 @@ button.Mui-selected {
     }
     .favorite-btn {
         top: 130px;
+    }
+
+    .about-main {
+        padding: 10px;
     }
 }

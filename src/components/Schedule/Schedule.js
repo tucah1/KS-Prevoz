@@ -66,9 +66,6 @@ export const Schedule = ({
                 active: input,
             });
         }
-        // } else {
-        //     removeAutocompleteResults();
-        // }
     };
 
     const onSubmit = (e) => {

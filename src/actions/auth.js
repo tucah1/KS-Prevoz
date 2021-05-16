@@ -128,4 +128,5 @@ export const googleLogin = (token) => async (dispatch) => {
 export const logout = () => (dispatch) => {
     dispatch({ type: CLEAR_USER });
     dispatch({ type: LOGOUT });
+    dispatch(setAlert("You successfully logged out!", "success"));
 };
