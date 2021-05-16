@@ -108,7 +108,13 @@ export const Navbar = ({
                         : "navbar navbar-expand-lg nav-exp"
                 }
             >
-                <Link className="navbar-brand" to="/">
+                <Link
+                    className="navbar-brand"
+                    to="/"
+                    onClick={() => {
+                        setdisplayNav(false);
+                    }}
+                >
                     <span>KS</span> Prevoz
                 </Link>
                 <button
