@@ -339,7 +339,7 @@ router.post('/auto-complete', [
 		})
 		connection.release()
 
-		return res.json(result.slice(0, 4))
+		return res.json(result.slice(0, 3))
 	} catch (error) {
 		console.log(error)
 		return res
