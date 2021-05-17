@@ -146,6 +146,7 @@ export const sendNotification = (formData) => async (dispatch) => {
         const res = await api.post(`/notifications/sendNotification`, formData);
 
         dispatch(setAlert(res.data.message, "success"));
+        dispatch(getNotifications());
     } catch (err) {
         console.log(err.response);
         if (err.response) {
