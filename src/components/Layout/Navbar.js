@@ -319,9 +319,15 @@ export const Navbar = ({
             >
                 <>
                     {authType ? (
-                        <Login handleAuthType={handleAuthType} />
+                        <Login
+                            handleAuthType={handleAuthType}
+                            handleClose={handleCloseSigninModal}
+                        />
                     ) : (
-                        <Register handleAuthType={handleAuthType} />
+                        <Register
+                            handleAuthType={handleAuthType}
+                            handleClose={handleCloseSigninModal}
+                        />
                     )}
                 </>
             </Modal>
@@ -333,7 +339,7 @@ export const Navbar = ({
                 aria-describedby="simple-modal-description"
             >
                 <>
-                    <Settings />
+                    <Settings handleClose={handleCloseSettingsModal} />
                 </>
             </Modal>
         </>

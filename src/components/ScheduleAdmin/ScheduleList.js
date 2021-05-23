@@ -7,7 +7,7 @@ import AddNewLine from "./AddNewLine";
 import EditLine from "./EditLine";
 import Modal from "@material-ui/core/Modal";
 import { Pagination } from "@material-ui/lab";
-
+import Tooltip from "@material-ui/core/Tooltip";
 export const ScheduleList = ({
     loading,
     getScheduleList,
@@ -186,27 +186,33 @@ export const ScheduleList = ({
                                                                     }
                                                                 </p>
                                                             </div>
-                                                            <button
-                                                                className="sch-item-right"
-                                                                onClick={() => {
-                                                                    seteditlineData(
-                                                                        {
-                                                                            toPoint:
-                                                                                line.to_point,
-                                                                            fromPoint:
-                                                                                line.from_point,
-                                                                            lineId: line.line_id,
-                                                                            transType:
-                                                                                line.transport_type,
-                                                                        }
-                                                                    );
-                                                                    setmodalEditLine(
-                                                                        true
-                                                                    );
-                                                                }}
+                                                            <Tooltip
+                                                                title="Line settings"
+                                                                placement="top"
+                                                                arrow
                                                             >
-                                                                <i className="fas fa-cogs"></i>
-                                                            </button>
+                                                                <button
+                                                                    className="sch-item-right"
+                                                                    onClick={() => {
+                                                                        seteditlineData(
+                                                                            {
+                                                                                toPoint:
+                                                                                    line.to_point,
+                                                                                fromPoint:
+                                                                                    line.from_point,
+                                                                                lineId: line.line_id,
+                                                                                transType:
+                                                                                    line.transport_type,
+                                                                            }
+                                                                        );
+                                                                        setmodalEditLine(
+                                                                            true
+                                                                        );
+                                                                    }}
+                                                                >
+                                                                    <i className="fas fa-cogs mx-2"></i>
+                                                                </button>
+                                                            </Tooltip>
                                                         </div>
                                                     </Fragment>
                                                 ))}
@@ -222,6 +228,7 @@ export const ScheduleList = ({
                                                         onPageChange(page);
                                                     }}
                                                     color="primary"
+                                                    siblingCount={4}
                                                 />
                                             </>
                                         ) : (
@@ -248,7 +255,7 @@ export const ScheduleList = ({
                     aria-describedby="simple-modal-description"
                 >
                     <>
-                        <AddNewLine />
+                        <AddNewLine handleClose={handleAddNewLineModalClose} />
                     </>
                 </Modal>
                 <Modal

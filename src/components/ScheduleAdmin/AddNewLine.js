@@ -2,8 +2,10 @@ import React, { useState } from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { addNewLine } from "../../actions/admin";
+import CloseIcon from "@material-ui/icons/Close";
+import Tooltip from "@material-ui/core/Tooltip";
 
-export const AddNewLine = ({ addNewLine }) => {
+export const AddNewLine = ({ addNewLine, handleClose }) => {
     const [formData, setformData] = useState({
         fromPoint: "",
         toPoint: "",
@@ -78,6 +80,17 @@ export const AddNewLine = ({ addNewLine }) => {
     return (
         <>
             <div className="modal-wrapper">
+                <div className="close-btn" onClick={handleClose}>
+                    <Tooltip
+                        title="Close"
+                        placement="top"
+                        arrow
+                        enterDelay={700}
+                        leaveDelay={100}
+                    >
+                        <CloseIcon />
+                    </Tooltip>
+                </div>
                 <div className="add-line">
                     <h5 className="addline-heading">Add new line</h5>
                     <form

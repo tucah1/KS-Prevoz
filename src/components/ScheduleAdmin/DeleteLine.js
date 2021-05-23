@@ -1,9 +1,22 @@
 import React from "react";
 import PropTypes from "prop-types";
+import CloseIcon from "@material-ui/icons/Close";
+import Tooltip from "@material-ui/core/Tooltip";
 
 const DeleteLine = ({ fromPoint, toPoint, transType, handleYes, handleNo }) => {
     return (
         <div className="modal-wrapper">
+            <div className="close-btn delete-close-btn" onClick={handleNo}>
+                <Tooltip
+                    title="Close"
+                    placement="top"
+                    arrow
+                    enterDelay={700}
+                    leaveDelay={100}
+                >
+                    <CloseIcon />
+                </Tooltip>
+            </div>
             <div className="add-line delete-line d-flex flex-column">
                 <h6 className="delete-line-heading">
                     Are you sure that you want to delete line{" "}

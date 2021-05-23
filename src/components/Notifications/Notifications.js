@@ -59,14 +59,16 @@ export const Notifications = ({
                                     autoComplete="off"
                                     onChange={(e) => onChange(e)}
                                     placeholder="Subject"
+                                    spellCheck={false}
                                 />
 
                                 <textarea
                                     name="message"
-                                    rows="12"
+                                    rows="10"
                                     value={message}
                                     placeholder="Message"
                                     required
+                                    spellCheck={false}
                                     onChange={(e) => onChange(e)}
                                 ></textarea>
                                 <p>

@@ -4,6 +4,8 @@ import { connect } from "react-redux";
 import { deleteLine, editLine, getLineScheduleFile } from "../../actions/admin";
 import DeleteLine from "./DeleteLine";
 import Modal from "@material-ui/core/Modal";
+import CloseIcon from "@material-ui/icons/Close";
+import Tooltip from "@material-ui/core/Tooltip";
 
 export const EditLine = ({
     fPoint,
@@ -93,6 +95,17 @@ export const EditLine = ({
     return (
         <>
             <div className="modal-wrapper">
+                <div className="close-btn" onClick={handleClose}>
+                    <Tooltip
+                        title="Close"
+                        placement="top"
+                        arrow
+                        enterDelay={700}
+                        leaveDelay={100}
+                    >
+                        <CloseIcon />
+                    </Tooltip>
+                </div>
                 <div className="add-line">
                     <h5 className="addline-heading">Line settings</h5>
                     <form

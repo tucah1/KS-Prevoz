@@ -5,6 +5,8 @@ import { Redirect } from "react-router-dom";
 import { googleLogin, register } from "../../actions/auth";
 import GoogleLogin from "react-google-login";
 import { setAlert } from "../../actions/alert";
+import CloseIcon from "@material-ui/icons/Close";
+import Tooltip from "@material-ui/core/Tooltip";
 
 export const Register = ({
     handleAuthType,
@@ -12,6 +14,7 @@ export const Register = ({
     register,
     googleLogin,
     setAlert,
+    handleClose,
 }) => {
     const [formData, setFormData] = useState({
         firstName: "",
@@ -52,6 +55,11 @@ export const Register = ({
     return (
         <>
             <div className="modal-wrapper">
+                <div className="close-btn" onClick={handleClose}>
+                    <Tooltip title="Close" placement="top" arrow>
+                        <CloseIcon />
+                    </Tooltip>
+                </div>
                 <div className="login ">
                     <div className="login-heading">
                         <button onClick={handleAuthType}>Sign in</button>

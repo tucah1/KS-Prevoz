@@ -3,18 +3,17 @@ import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import {
     getAutocompleteResults,
-    getLineSchedulById,
     getLineSchedulByNames,
     removeAutocompleteResults,
 } from "../../actions/schedule";
 import ScheduleTable from "./ScheduleTable";
 import { useState } from "react";
 import AutocompleteResults from "./AutocompleteResults";
+import Tooltip from "@material-ui/core/Tooltip";
 
 export const Schedule = ({
     getLineSchedulByNames,
     getAutocompleteResults,
-    removeAutocompleteResults,
     results,
 }) => {
     //cleanup useEffect
@@ -53,7 +52,6 @@ export const Schedule = ({
                 active: activeInput,
             });
         } else {
-            // removeAutocompleteResults();
             setisSelected({ ...isSelected, [e.target.name]: false });
         }
     };
@@ -136,10 +134,17 @@ export const Schedule = ({
                                     />
                                 )}
                         </div>
-
-                        <button className="schedule-search-btn">
-                            <i className="fas fa-search"></i>
-                        </button>
+                        <Tooltip
+                            title="Search"
+                            placement="top"
+                            enterDelay={700}
+                            leaveDelay={100}
+                            arrow
+                        >
+                            <button className="schedule-search-btn">
+                                <i className="fas fa-search"></i>
+                            </button>
+                        </Tooltip>
                         <div className="search-wrap">
                             <input
                                 type="text"

@@ -3,8 +3,10 @@ import { connect } from "react-redux";
 import PropTypes from "prop-types";
 import { updateSettings } from "../actions/user";
 import { setAlert } from "../actions/alert";
+import CloseIcon from "@material-ui/icons/Close";
+import Tooltip from "@material-ui/core/Tooltip";
 
-const Settings = ({ user, updateSettings, setAlert }) => {
+const Settings = ({ user, updateSettings, setAlert, handleClose }) => {
     const [formData, setformData] = useState({
         firstName: "",
         lastName: "",
@@ -99,6 +101,17 @@ const Settings = ({ user, updateSettings, setAlert }) => {
     return (
         <>
             <div className="modal-wrapper">
+                <div className="close-btn" onClick={handleClose}>
+                    <Tooltip
+                        title="Close"
+                        placement="top"
+                        arrow
+                        enterDelay={700}
+                        leaveDelay={100}
+                    >
+                        <CloseIcon />
+                    </Tooltip>
+                </div>
                 <div className="settings">
                     <h5 className="set-heading">Settings</h5>
                     <form
@@ -180,7 +193,7 @@ const Settings = ({ user, updateSettings, setAlert }) => {
                                 <label className="flex-row">
                                     Notifications
                                     <input
-                                        className="m-0"
+                                        id="notif-checkbox"
                                         type="checkbox"
                                         checked={notifications}
                                         onChange={(e) => onChange(e)}

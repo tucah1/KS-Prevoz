@@ -26,7 +26,7 @@ export const getLineSchedulByNames = (data) => async (dispatch) => {
     try {
         dispatch({ type: GET_LINE_SCHEDULE_REQUEST });
         const res = await api.post(`/line/schedule-json-by-names`, data);
-
+        // console.log(res.data);
         dispatch({ type: GET_LINE_SCHEDULE_SUCCESS, payload: res.data });
     } catch (err) {
         console.log(err.response);

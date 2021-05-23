@@ -4,6 +4,8 @@ import { connect } from "react-redux";
 import { Redirect } from "react-router-dom";
 import { googleLogin, login } from "../../actions/auth";
 import GoogleLogin from "react-google-login";
+import CloseIcon from "@material-ui/icons/Close";
+import Tooltip from "@material-ui/core/Tooltip";
 
 export const Login = ({
     handleAuthType,
@@ -11,6 +13,7 @@ export const Login = ({
     login,
     googleLogin,
     userLevel,
+    handleClose,
 }) => {
     const [formData, setFormData] = useState({ email: "", password: "" });
     const { email, password } = formData;
@@ -38,7 +41,12 @@ export const Login = ({
     return (
         <>
             <div className="modal-wrapper">
-                <div className="login ">
+                <div className="close-btn" onClick={handleClose}>
+                    <Tooltip title="Close" placement="top" arrow>
+                        <CloseIcon />
+                    </Tooltip>
+                </div>
+                <div className="login">
                     <div className="login-heading">
                         <button>
                             <span>Sign in</span>

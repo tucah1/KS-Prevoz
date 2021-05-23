@@ -8,6 +8,8 @@ import ScheduleTable from "./Schedule/ScheduleTable";
 import { getLineSchedulById } from "../actions/schedule";
 import DeleteForeverIcon from "@material-ui/icons/DeleteForever";
 import ExpandLessIcon from "@material-ui/icons/ExpandLess";
+import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
+import Tooltip from "@material-ui/core/Tooltip";
 
 const Favorites = ({
     getFavorites,
@@ -21,6 +23,15 @@ const Favorites = ({
     }, [getFavorites]);
 
     const [openedSchedule, setopenedSchedule] = useState("");
+
+    const toggleScheduleDisplay = (id) => {
+        if (openedSchedule !== id) {
+            setopenedSchedule(id);
+            getLineSchedulById(id);
+        } else {
+            setopenedSchedule("");
+        }
+    };
 
     return (
         <>
@@ -49,17 +60,9 @@ const Favorites = ({
                                                         <div
                                                             className="fav-item-left d-flex flex-row w-100"
                                                             onClick={() => {
-                                                                if (
-                                                                    openedSchedule !==
+                                                                toggleScheduleDisplay(
                                                                     fav.line_id
-                                                                ) {
-                                                                    setopenedSchedule(
-                                                                        fav.line_id
-                                                                    );
-                                                                    getLineSchedulById(
-                                                                        fav.line_id
-                                                                    );
-                                                                }
+                                                                );
                                                             }}
                                                         >
                                                             <p className="fav-line-name">
@@ -74,20 +77,61 @@ const Favorites = ({
                                                         </div>
                                                         {openedSchedule ===
                                                         fav.line_id ? (
-                                                            <button
-                                                                className="fav-item-right"
-                                                                onClick={() => {
-                                                                    setopenedSchedule(
-                                                                        ""
-                                                                    );
-                                                                }}
+                                                            <Tooltip
+                                                                title="Hide line schedule"
+                                                                placement="top"
+                                                                enterDelay={300}
+                                                                leaveDelay={100}
+                                                                arrow
                                                             >
-                                                                {/* <i class="fas fa-trash"></i> */}
-                                                                <ExpandLessIcon />
-                                                            </button>
+                                                                <button
+                                                                    className="fav-item-right mx-2"
+                                                                    onClick={() => {
+                                                                        setopenedSchedule(
+                                                                            ""
+                                                                        );
+                                                                    }}
+                                                                >
+                                                                    {/* <i class="fas fa-trash"></i> */}
+                                                                    <ExpandLessIcon />
+                                                                </button>
+                                                            </Tooltip>
                                                         ) : (
+                                                            <>
+                                                                <Tooltip
+                                                                    title="Show line schedule"
+                                                                    placement="top"
+                                                                    enterDelay={
+                                                                        300
+                                                                    }
+                                                                    leaveDelay={
+                                                                        100
+                                                                    }
+                                                                    arrow
+                                                                >
+                                                                    <button
+                                                                        className="fav-item-right mx-2"
+                                                                        onClick={() => {
+                                                                            toggleScheduleDisplay(
+                                                                                fav.line_id
+                                                                            );
+                                                                        }}
+                                                                    >
+                                                                        {/* <i class="fas fa-trash"></i> */}
+                                                                        <ExpandMoreIcon />
+                                                                    </button>
+                                                                </Tooltip>
+                                                            </>
+                                                        )}
+                                                        <Tooltip
+                                                            title="Delete line"
+                                                            placement="top"
+                                                            enterDelay={300}
+                                                            leaveDelay={100}
+                                                            arrow
+                                                        >
                                                             <button
-                                                                className="fav-item-right"
+                                                                className="fav-item-right mx-2"
                                                                 onClick={() => {
                                                                     deleteFavoriteLine(
                                                                         fav.line_id
@@ -97,7 +141,7 @@ const Favorites = ({
                                                                 {/* <i class="fas fa-trash"></i> */}
                                                                 <DeleteForeverIcon />
                                                             </button>
-                                                        )}
+                                                        </Tooltip>
                                                     </div>
                                                 </div>
                                             </div>

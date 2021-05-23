@@ -16,6 +16,7 @@ const FindRoutes = () => {
                         </div>
                     </div>
                 </div>
+
                 <div className="find-routes-main">
                     <Map />
                 </div>
