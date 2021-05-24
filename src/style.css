@@ -990,9 +990,11 @@ textarea:focus {
 
 .form p {
     font-size: 15px;
-    letter-spacing: 0.05em;
+    font-weight: 600;
+    letter-spacing: 0.07em;
     color: #bbc7d3;
     margin: 0 20px;
+    text-shadow: 1px 4px rgba(0, 0, 0, 0.04);
 }
 
 .notf-send {

@@ -6,6 +6,7 @@ import WeekDayButton from "./WeekdayButton";
 import { removeLineSchedule } from "../../actions/schedule";
 import { Pagination } from "@material-ui/lab";
 import { addFavoriteLine, deleteFavoriteLine } from "../../actions/user";
+import Tooltip from "@material-ui/core/Tooltip";
 
 export const ScheduleTable = ({
     schedule,
@@ -162,25 +163,45 @@ export const ScheduleTable = ({
                             {userLevel === 1 && showFavorite && (
                                 <div className="favorite-btn">
                                     {isFavorite ? (
-                                        <button
-                                            onClick={() => {
-                                                deleteFavoriteLine(line_id);
-                                                setisFavorite(false);
-                                            }}
-                                        >
-                                            {" "}
-                                            <i className="fas fa-star"></i>
-                                        </button>
+                                        <>
+                                            <Tooltip
+                                                title="Remove line from favorites"
+                                                placement="top"
+                                                arrow
+                                                enterDelay={700}
+                                                leaveDelay={100}
+                                            >
+                                                <button
+                                                    onClick={() => {
+                                                        deleteFavoriteLine(
+                                                            line_id
+                                                        );
+                                                        setisFavorite(false);
+                                                    }}
+                                                >
+                                                    {" "}
+                                                    <i className="fas fa-star"></i>
+                                                </button>
+                                            </Tooltip>
+                                        </>
                                     ) : (
-                                        <button
-                                            onClick={() => {
-                                                addFavoriteLine(line_id);
-                                                setisFavorite(true);
-                                            }}
+                                        <Tooltip
+                                            title="Add line to favorites"
+                                            placement="top"
+                                            arrow
+                                            enterDelay={700}
+                                            leaveDelay={100}
                                         >
-                                            {" "}
-                                            <i className="far fa-star"></i>
-                                        </button>
+                                            <button
+                                                onClick={() => {
+                                                    addFavoriteLine(line_id);
+                                                    setisFavorite(true);
+                                                }}
+                                            >
+                                                {" "}
+                                                <i className="far fa-star"></i>
+                                            </button>
+                                        </Tooltip>
                                     )}
                                 </div>
                             )}
