@@ -6,6 +6,7 @@ import {
     LOGIN_SUCCESS,
     LOGIN_FAIL,
     LOGOUT,
+    LOAD_USER,
 } from "../actions/types";
 
 const initialState = {
@@ -19,6 +20,11 @@ const auth = (state = initialState, action) => {
     const { type, payload } = action;
 
     switch (type) {
+        case LOAD_USER:
+            return {
+                ...state,
+                loading: true,
+            };
         case USER_LOADED:
             return {
                 ...state,

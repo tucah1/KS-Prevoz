@@ -10,26 +10,21 @@ import {
     REQUEST,
     SUCCESS,
     FAILURE,
+    LOAD_USER,
 } from "./types";
 import api from "../utils/api";
 import { setAlert } from "./alert";
 
 // Load User
 export const loadUser = () => async (dispatch) => {
-    const config = {
-        // headers: { "Cache-Control": "max-age=0" },
-    };
-
     try {
-        dispatch({ type: REQUEST });
-        const res = await api.get("/auth", config);
+        dispatch({ type: LOAD_USER });
+        const res = await api.get("/auth");
         dispatch({
             type: USER_LOADED,
             payload: res.data,
         });
-        dispatch({ type: SUCCESS });
     } catch (err) {
-        dispatch({ type: FAILURE });
         dispatch({
             type: AUTH_ERROR,
         });
