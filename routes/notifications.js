@@ -1,8 +1,8 @@
 const express = require('express')
-const nodemailer = require('nodemailer')
 const { body, validationResult } = require('express-validator')
 const uuid = require('uuid')
 
+const sendMail = require('../util/emailHandler')
 const authMiddleware = require('../middleware/auth')
 const adminAuthMiddleware = require('../middleware/adminAuth')
 const router = express.Router()
@@ -56,33 +56,13 @@ router.post(
 		try {
 			let connection = await getConnection()
 			let result = await connection.query(
-				'SELECT email FROM app_user WHERE app_user_access = 1'
+				'SELECT email FROM app_user WHERE app_user_access = 1 AND notifications = 1'
 			)
 			connection.release()
 
 			let emailList = result[0].map((x) => x['email'])
 
-			let transporter = nodemailer.createTransport({
-				host: 'smtp.gmail.com',
-				port: 587,
-				secure: false, // true for 465, false for other ports
-				auth: {
-					user: process.env.USER, // generated ethereal user
-					pass: process.env.PASSWORD, // generated ethereal password
-				},
-				tls: {
-					rejectUnauthorized: false,
-				},
-			})
-
-			// send mail with defined transport object
-			await transporter.sendMail({
-				from: '"KSPrevoz" <tech.ksprevoz@gmail.com>', // sender address
-				to: emailList, // list of receivers
-				subject: req.body.subject, // Subject line
-				text: req.body.body, // plain text body
-				//html: "", we can maybe add it later
-			})
+			await sendMail(req.body.subject, req.body.body, emailList)
 
 			let newNotification = {
 				notification_id: uuid.v4(),

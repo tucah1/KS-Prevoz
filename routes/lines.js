@@ -13,6 +13,7 @@ const {
 	deleteDriveFile,
 	readFile,
 } = require('../util/driveHandler')
+const sendMail = require('../util/emailHandler')
 
 const router = express.Router()
 
@@ -133,6 +134,12 @@ router.post(
 				await deleteDriveFile(result[0][0].schedule_file)
 				deleteFile(req.newLineId)
 				newData.schedule_file = id
+
+				result = await connection.query('SELECT f.app_user_id, f.line_id, ap.app_user_access, ap.notifications, ap.email, ap.first_name FROM favorite as f INNER JOIN app_user as ap ON f.app_user_id = ap.app_user_id WHERE f.line_id = ? AND ap.app_user_access = 1 AND ap.notifications = 1', [req.body.line_id])
+				let emailList = result[0].map((x) => x['email'])
+				let subject = `KSPrevoz Schedule Updated - Line: ${req.body.from_point} - ${req.body.to_point} - ${req.body.transport_type}`
+				let body = `Schedule for line '${req.body.from_point} - ${req.body.to_point} - ${req.body.transport_type}' has been changed! Please visit ksprevoz.herokuapp.com for more information!`
+				await sendMail(subject, body, emailList)
 			}
 
 			await connection.query('UPDATE line SET ? WHERE line_id = ?', [
