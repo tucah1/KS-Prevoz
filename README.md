@@ -4,8 +4,8 @@ KSPrevoz is a web application that will provide arrival time of public transport
 Canton Sarajevo and appropriate routes from point A to point B. It will also make schedule updating
 and notification sharing easier for administration of public transport company.
 
-The web application is created in JavaScript. The frontend was implemented using React.js (with Redux as state manager) while the backend was done using Node.js, Express, and mySQL. Web application uses Google Maps API for
-routes finding, as well as Google Drive API for file storage (.csv file that contain schedule information). All schedule data shown on the website is scraped from https://gras.ba/bs/.
+The web application is created in JavaScript. The frontend was implemented using React.js (with Redux as state manager) while the backend was done using Node.js, Express, and mySQL. Web application utilizes Google Maps API for
+routes finding, as well as Google Drive API for file storage (.csv files that contain schedules information). All schedule data shown on the website is scraped from https://gras.ba/bs/.
 
 Check out the application by following [this link](https://ksprevoz.herokuapp.com/).
 
@@ -88,3 +88,7 @@ This web application is a project done for CS308 Software Engineering class, Spr
 -   Muhammed Musanović - [@mm105](https://github.com/mm105)
 -   Šejla Burnić - [@jinx244](https://github.com/jinx244)
 -   Fejsal Perva - [@FejsalP](https://github.com/FejsalP)
+
+## Docs
+
+For more information about the application and the project please refer to [KSPrevoz_Final_Report.pdf](/docs/KSPrevoz_Final_Report.pdf)
