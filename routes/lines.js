@@ -4,6 +4,7 @@ const { body, validationResult } = require('express-validator')
 const getConnection = require('../config/database')
 const authMiddleware = require('../middleware/auth')
 const adminAuthMiddleware = require('../middleware/adminAuth')
+const weakAuthMiddleware = require('../middleware/authWeak')
 const uploadScheduleMiddleware = require('../middleware/scheduleUpload')
 const { genNewLineId } = require('../middleware/genId')
 const { deleteFile } = require('../util/fileHandling')
@@ -359,6 +360,7 @@ router.post('/auto-complete', [
 // @desc        Get schedule for single line in json format
 // @access      Public
 router.post('/schedule-json-by-names', [
+	weakAuthMiddleware,
 	body('from_point').exists(),
 	body('to_point').exists()
 ], async (req, res) => {
@@ -381,6 +383,7 @@ router.post('/schedule-json-by-names', [
 		let result = await connection.query('SELECT * FROM line WHERE (LOWER(from_point) = ? AND LOWER(to_point) = ?) OR (LOWER(from_point) = ? AND LOWER(to_point) = ?)', [from_point, to_point, to_point, from_point])
 		
 		if (result[0].length === 0) {
+			connection.release()
 			return res.status(400).json({errors: [
 				{
 					code: 400,
@@ -389,7 +392,11 @@ router.post('/schedule-json-by-names', [
 			]})
 		}
 
-		let result2 = await connection.query('SELECT * FROM favorite WHERE line_id = ?', result[0][0].line_id)
+		let result2 = [[]]
+
+		if (req.user !== undefined) {
+			result2 = await connection.query('SELECT * FROM favorite WHERE line_id = ? AND app_user_id = ?', [result[0][0].line_id, req.user.id])
+		}
 		connection.release()
 
 		const {schedule_file, ...lineInfo} = result[0][0]
