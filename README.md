@@ -85,7 +85,7 @@ The list of all system features for KSPrevoz as well as their brief explanations
 This web application is a project done for CS308 Software Engineering class, Spring 2021 at International University of Sarajevo (IUS). Application was created by:
 
 -   Harun Tucaković - [@tucah1](https://github.com/tucah1)
--   Muhammed Musanović - [@mm105](https://github.com/mm105)
+-   Muhammed Mušanović - [@mm105](https://github.com/mm105)
 -   Šejla Burnić - [@jinx244](https://github.com/jinx244)
 -   Fejsal Perva - [@FejsalP](https://github.com/FejsalP)
 
